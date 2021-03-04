@@ -1,0 +1,3 @@
+[submodule "javascript-algorithms"]
+	path = javascript-algorithms
+	url = https://github.com/trekhleb/javascript-algorithms.git

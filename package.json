@@ -12,10 +12,17 @@
     "@chakra-ui/theme-tools": "1.0.4",
     "@emotion/react": "11.1.5",
     "@emotion/styled": "11.1.5",
+    "@mdx-js/loader": "^1.6.22",
+    "@mdx-js/react": "^1.6.22",
+    "@next/mdx": "^10.0.7",
     "framer-motion": "^3.5.2",
+    "gray-matter": "^4.0.2",
     "next": "latest",
+    "raw-loader": "^4.0.2",
     "react": "^17.0.1",
-    "react-dom": "^17.0.1"
+    "react-dom": "^17.0.1",
+    "react-markdown": "^5.0.3",
+    "styled-components": "^5.2.1"
   },
   "devDependencies": {
     "@types/node": "^14.6.0",
