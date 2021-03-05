@@ -90,6 +90,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
     process.cwd(),
     "public",
     "data",
+    "src",
     // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
     // @ts-ignore
     ...context.params.slug,
