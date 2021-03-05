@@ -10,21 +10,28 @@ const getPostsPaths = async () => {
     "data-structures",
   );
 
-  console.log('algorithmsDir', algorithmsDir);
-  console.log('dataStructuresDir', dataStructuresDir);
+  console.log("@@@ algorithmsDir", algorithmsDir);
+  console.log("@@@ dataStructuresDir", dataStructuresDir);
 
   const algorithmsReadmeFiles = await glob(algorithmsDir + "/**/README.md");
+  console.log("@@@ algorithmsReadmeFiles", algorithmsReadmeFiles);
   const dataStructuresReadmeFiles = await glob(
     dataStructuresDir + "/**/README.md",
   );
+  console.log("@@@ dataStructuresReadmeFiles", algorithmsReadmeFiles);
 
   const mappedAlgorithmsReadmeFiles = algorithmsReadmeFiles.map((fullPath) => {
+    console.log("@@@ fullPath", fullPath);
     const index = fullPath.indexOf("algorithms");
     const short = fullPath.slice(index);
     const splitted = short.split("/");
     const slug = splitted.slice(0, splitted.length - 1);
+    console.log("@@@ slug", slug);
+
     return { params: { slug } };
   });
+
+  console.log("@@@ mappedAlgorithmsReadmeFiles", mappedAlgorithmsReadmeFiles);
 
   const mappedDataStructuresReadmeFiles = dataStructuresReadmeFiles.map(
     (fullPath) => {
