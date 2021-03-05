@@ -5,10 +5,10 @@ import getConfig from "next/config";
 const { serverRuntimeConfig } = getConfig();
 
 const getPostsPaths = async () => {
-  const algorithmsDir = join(process.cwd(), "src", "data", "algorithms");
+  const algorithmsDir = join(process.cwd(), "public", "data", "algorithms");
   const dataStructuresDir = join(
     process.cwd(),
-    "src",
+    "public",
     "data",
     "data-structures",
   );
@@ -16,13 +16,13 @@ const getPostsPaths = async () => {
   const ddddd = join(serverRuntimeConfig.PROJECT_ROOT);
   const ddddd2 = join(
     serverRuntimeConfig.PROJECT_ROOT,
-    "./src/data/algorithms/",
+    "./public/data/algorithms/",
   );
 
   console.log("ddddd", ddddd);
   console.log("ddddd2", ddddd2);
 
-  const asd = resolve("./src", "data", "algorithms");
+  const asd = resolve("./public", "data", "algorithms");
   console.log("??????????? ", asd);
 
   console.log("@@@ algorithmsDir", algorithmsDir);

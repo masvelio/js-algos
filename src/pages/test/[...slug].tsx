@@ -80,7 +80,7 @@ export async function getStaticPaths() {
 export const getStaticProps: GetStaticProps = async (context) => {
   const path = join(
     process.cwd(),
-    "src",
+    "public",
     "data",
     // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
     // @ts-ignore

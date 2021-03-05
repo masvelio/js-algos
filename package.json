@@ -4,7 +4,7 @@
   "scripts": {
     "build": "next build",
     "build:prod": "yarn install:submodule && yarn copy-submodule-data && next build",
-    "copy-submodule-data": "mkdir -p src/data && cp -r javascript-algorithms/src/ src/data",
+    "copy-submodule-data": "mkdir -p public/data && cp -r javascript-algorithms/src/ public/data",
     "dev": "next",
     "install:submodule": "git submodule add --force https://github.com/trekhleb/javascript-algorithms.git",
     "start": "next start"
