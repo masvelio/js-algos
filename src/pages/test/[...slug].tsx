@@ -9,14 +9,14 @@ import {
 } from "@chakra-ui/react";
 import ReactMarkdown from "react-markdown";
 import { useRouter } from "next/router";
-// import fs from "fs-extra";
+import fs from "fs-extra";
 
 import { Container } from "src/components/Container";
 import { Main } from "src/components/Main";
 import { DarkModeSwitch } from "src/components/DarkModeSwitch";
 
 import { GetStaticProps } from "next";
-// import { join } from "path";
+import { join } from "path";
 import getPostsPaths from "../../utils/getPostsPaths";
 
 const Slug = (props: any) => {
@@ -77,24 +77,23 @@ export async function getStaticPaths() {
   };
 }
 
-export const getStaticProps: GetStaticProps = async () => {
-  // const path = join(
-  //   process.cwd(),
-  //   "public",
-  //   "data",
-  //   // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-  //   // @ts-ignore
-  //   ...context.params.slug,
-  //   "README.md",
-  // );
-
-  // const fileContent = fs.readFileSync(path, "utf-8");
+export const getStaticProps: GetStaticProps = async (context) => {
+  const path = join(
+    "public",
+    "data",
+    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // @ts-ignore
+    ...context.params.slug,
+    "README.md",
+  );
+  //
+  const fileContent = fs.readFileSync(path, "utf-8");
 
   return {
     props: {
       posts: [],
       slug: [],
-      fileContent: "",
+      fileContent,
     },
   };
 };
