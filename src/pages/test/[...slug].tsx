@@ -79,14 +79,17 @@ export async function getStaticPaths() {
 
 export const getStaticProps: GetStaticProps = async (context) => {
   const path = join(
-    "./public",
+    process.cwd(),
+    "public",
     "data",
     // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
     // @ts-ignore
     ...context.params.slug,
     "README.md",
   );
-  //
+  console.log("$$$$$ path", path);
+  console.log("$$$$$ context.params.slug", context?.params?.slug);
+
   const fileContent = fs.readFileSync(path, "utf-8");
 
   return {
