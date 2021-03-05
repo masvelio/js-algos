@@ -1,16 +1,16 @@
 import { join } from "path";
 import glob from "glob-promise";
-import dirTree from "directory-tree";
+// import dirTree from "directory-tree";
 // import getConfig from "next/config";
 // const { serverRuntimeConfig } = getConfig();
 
 const getPostsPaths = async () => {
-  console.log("dirTree", JSON.stringify(dirTree("./public"), null, 2));
+  // console.log("dirTree", JSON.stringify(dirTree("./public/"), null, 2));
   // console.log("dirTree1", JSON.stringify(dirTree("./src/data"), null, 2));
-  // console.log(
-  //   "dirTree1",
-  //   JSON.stringify(await glob("./public/**/README.md"), null, 2),
-  // );
+  console.log(
+    "dirTree1",
+    JSON.stringify(await glob("public/**/README.md"), null, 2),
+  );
   // console.log("dirTree2", JSON.stringify(dirTree("./public"), null, 2));
   // console.log(
   //   "dirTree3",
@@ -64,7 +64,7 @@ const getPostsPaths = async () => {
   // console.log("????? tree2", JSON.stringify(tree2, null, 2));
 
   const algorithmsReadmeFiles = await glob(
-    ".public/data/algorithms/**/README.md",
+    "public/data/algorithms/**/README.md",
   );
   // const algorithmsReadmeFiles2 = await glob(ddddd2 + "/**/README.md");
   // console.log("@@@ algorithmsReadmeFiles", algorithmsReadmeFiles);
