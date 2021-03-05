@@ -20,6 +20,7 @@ import { DarkModeSwitch } from "src/components/DarkModeSwitch";
 import { GetStaticProps } from "next";
 import { join } from "path";
 import getPostsPaths from "../../utils/getPostsPaths";
+import glob from "glob-promise";
 
 const Slug = (props: any) => {
   const router = useRouter();
@@ -71,7 +72,7 @@ export default Slug;
 
 export async function getStaticPaths() {
   const paths = await getPostsPaths();
-  console.log("paths", JSON.stringify(paths, null, 2));
+  // console.log("paths", JSON.stringify(paths, null, 2));
 
   return {
     paths,
@@ -80,6 +81,11 @@ export async function getStaticPaths() {
 }
 
 export const getStaticProps: GetStaticProps = async (context) => {
+  console.log(
+    "dirTree122",
+    JSON.stringify(await glob("public/**/README.md"), null, 2),
+  );
+
   const path = join(
     process.cwd(),
     "public",
@@ -97,27 +103,45 @@ export const getStaticProps: GetStaticProps = async (context) => {
     serverRuntimeConfig.PROJECT_ROOT,
   );
 
-  const fileContent = await fs.readFile(
-    join(
-      serverRuntimeConfig.PROJECT_ROOT,
-      "./public/data/",
-      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-      // @ts-ignore
-      ...context.params.slug,
-      "README.md",
-    ),
-    "utf-8",
-  );
+  try {
+    const fileContent = await fs.readFile(
+      join(
+        serverRuntimeConfig.PROJECT_ROOT,
+        "./public/data/",
+        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+        // @ts-ignore
+        ...context.params.slug,
+        "README.md",
+      ),
+      "utf-8",
+    );
 
-  console.log("fileContent", fileContent);
+    console.log("fileContent", fileContent);
+    return {
+      props: {
+        posts: [],
+        slug: [],
+        fileContent,
+      },
+    };
+  } catch (err) {
+    console.log("error", err);
+    return {
+      props: {
+        posts: [],
+        slug: [],
+        fileContent: "error",
+      },
+    };
+  }
 
   // const fileContent = fs.readFileSync(path, "utf-8");
 
-  return {
-    props: {
-      posts: [],
-      slug: [],
-      fileContent,
-    },
-  };
+  // return {
+  //   props: {
+  //     posts: [],
+  //     slug: [],
+  //     fileContent,
+  //   },
+  // };
 };

@@ -7,10 +7,10 @@ import glob from "glob-promise";
 const getPostsPaths = async () => {
   // console.log("dirTree", JSON.stringify(dirTree("./public/"), null, 2));
   // console.log("dirTree1", JSON.stringify(dirTree("./src/data"), null, 2));
-  console.log(
-    "dirTree1",
-    JSON.stringify(await glob("public/**/README.md"), null, 2),
-  );
+  // console.log(
+  //   "dirTree1",
+  //   JSON.stringify(await glob("public/**/README.md"), null, 2),
+  // );
   // console.log("dirTree2", JSON.stringify(dirTree("./public"), null, 2));
   // console.log(
   //   "dirTree3",
