@@ -1,6 +1,5 @@
 import {
   Link as ChakraLink,
-  Text,
   Heading,
   Code,
   List,
@@ -11,25 +10,16 @@ import {
 import { CheckCircleIcon, LinkIcon } from "@chakra-ui/icons";
 import ReactMarkdown from "react-markdown";
 
-import { Hero } from "src/components/Hero";
 import { Container } from "src/components/Container";
 import { Main } from "src/components/Main";
 import { DarkModeSwitch } from "src/components/DarkModeSwitch";
-import { CTA } from "src/components/CTA";
-import { Footer } from "src/components/Footer";
 // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
 // @ts-ignore
 import md from "./README.md";
 
 const Index = () => (
   <Container>
-    <Hero />
     <Main>
-      <Text>
-        Example repository of <Code>Next.js</Code> + <Code>chakra-ui</Code> +{" "}
-        <Code>typescript</Code>.
-      </Text>
-
       <ReactMarkdown
         renderers={{
           heading: (props) => {
@@ -77,10 +67,6 @@ const Index = () => (
     </Main>
 
     <DarkModeSwitch />
-    <Footer>
-      <Text>Next ❤️ Chakra</Text>
-    </Footer>
-    <CTA />
   </Container>
 );
 

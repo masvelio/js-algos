@@ -7,6 +7,10 @@ import {
   ListItem,
 } from "@chakra-ui/react";
 import { CheckCircleIcon, LinkIcon } from "@chakra-ui/icons";
+// import fs from "fs";
+import { join } from "path";
+import glob from "glob";
+import { GetStaticProps } from "next";
 
 import { Hero } from "../components/Hero";
 import { Container } from "../components/Container";
@@ -54,3 +58,24 @@ const Index = () => (
 );
 
 export default Index;
+
+export const getStaticProps: GetStaticProps = async () => {
+  const algorithmsDir = join(process.cwd(), "src", "data", "algorithms");
+  // const dataStructuresDir = join(
+  //   process.cwd(),
+  //   "src",
+  //   "data",
+  //   "data-structures",
+  // );
+
+  glob(algorithmsDir + "**/**/**/**/*README.md", (_err, files) => {
+    // eslint-disable-next-line no-console
+    console.log("files", files);
+  });
+
+  return {
+    props: {
+      posts: [],
+    },
+  };
+};
