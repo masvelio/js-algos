@@ -1,4 +1,4 @@
-import { join } from "path";
+import { join, resolve } from "path";
 import glob from "glob-promise";
 import dirTree from "directory-tree";
 
@@ -11,14 +11,17 @@ const getPostsPaths = async () => {
     "data-structures",
   );
 
+  const asd = resolve("./src", "data", "algorithms");
+  console.log("??????????? ", asd);
+
   console.log("@@@ algorithmsDir", algorithmsDir);
   console.log("@@@ dataStructuresDir", dataStructuresDir);
 
-  const tree = dirTree(algorithmsDir, { extensions: /\.md/ });
+  const tree = dirTree(asd, { extensions: /\.md/ });
 
   console.log("????? tree", JSON.stringify(tree, null, 2));
 
-  const algorithmsReadmeFiles = await glob(algorithmsDir + "/**/README.md");
+  const algorithmsReadmeFiles = await glob(asd + "/**/README.md");
   console.log("@@@ algorithmsReadmeFiles", algorithmsReadmeFiles);
   const dataStructuresReadmeFiles = await glob(
     dataStructuresDir + "/**/README.md",
