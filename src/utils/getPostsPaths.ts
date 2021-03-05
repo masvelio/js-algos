@@ -1,4 +1,4 @@
-import { join } from "path";
+// import { join } from "path";
 import glob from "glob-promise";
 // import dirTree from "directory-tree";
 // import getConfig from "next/config";
@@ -34,12 +34,12 @@ const getPostsPaths = async () => {
   // );
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   // const algorithmsDir = join(process.cwd(), "public", "data", "algorithms");
-  const dataStructuresDir = join(
-    process.cwd(),
-    "public",
-    "data",
-    "data-structures",
-  );
+  // const dataStructuresDir = join(
+  //   process.cwd(),
+  //   "public",
+  //   "data",
+  //   "data-structures",
+  // );
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   // const ddddd = join(serverRuntimeConfig.PROJECT_ROOT);
@@ -63,41 +63,42 @@ const getPostsPaths = async () => {
   // console.log("????? tree", JSON.stringify(tree, null, 2));
   // console.log("????? tree2", JSON.stringify(tree2, null, 2));
 
-  const algorithmsReadmeFiles = await glob(
-    "public/data/src/algorithms/**/README.md",
-  );
+  const algorithmsReadmeFiles = await glob("public/**/README.md");
   // const algorithmsReadmeFiles2 = await glob(ddddd2 + "/**/README.md");
   // console.log("@@@ algorithmsReadmeFiles", algorithmsReadmeFiles);
   // console.log("@@@ algorithmsReadmeFiles2", algorithmsReadmeFiles2);
-  const dataStructuresReadmeFiles = await glob(
-    dataStructuresDir + "/**/README.md",
-  );
+  // const dataStructuresReadmeFiles = await glob(
+  //   dataStructuresDir + "/**/README.md",
+  // );
   // console.log("@@@ dataStructuresReadmeFiles", algorithmsReadmeFiles);
 
-  const mappedAlgorithmsReadmeFiles = algorithmsReadmeFiles.map((fullPath) => {
-    // console.log("@@@ fullPath", fullPath);
-    const index = fullPath.indexOf("algorithms");
-    const short = fullPath.slice(index);
-    const splitted = short.split("/");
-    const slug = splitted.slice(0, splitted.length - 1);
-    // console.log("@@@ slug", slug);
-
-    return { params: { slug } };
-  });
-
-  // console.log("@@@ mappedAlgorithmsReadmeFiles", mappedAlgorithmsReadmeFiles);
-
-  const mappedDataStructuresReadmeFiles = dataStructuresReadmeFiles.map(
-    (fullPath) => {
-      const index = fullPath.indexOf("data-structures");
+  const mappedAlgorithmsReadmeFiles = algorithmsReadmeFiles
+    .filter((path) => path.indexOf("algorithms") > -1)
+    .map((fullPath) => {
+      // console.log("@@@ fullPath", fullPath);
+      const index = fullPath.indexOf("algorithms");
       const short = fullPath.slice(index);
       const splitted = short.split("/");
       const slug = splitted.slice(0, splitted.length - 1);
-      return { params: { slug } };
-    },
-  );
+      console.log("@@@ slug", slug);
 
-  return [...mappedAlgorithmsReadmeFiles, ...mappedDataStructuresReadmeFiles];
+      return { params: { slug } };
+    });
+
+  // console.log("@@@ mappedAlgorithmsReadmeFiles", mappedAlgorithmsReadmeFiles);
+
+  // const mappedDataStructuresReadmeFiles = dataStructuresReadmeFiles.map(
+  //   (fullPath) => {
+  //     const index = fullPath.indexOf("data-structures");
+  //     const short = fullPath.slice(index);
+  //     const splitted = short.split("/");
+  //     const slug = splitted.slice(0, splitted.length - 1);
+  //     return { params: { slug } };
+  //   },
+  // );
+
+  // return [...mappedAlgorithmsReadmeFiles, ...mappedDataStructuresReadmeFiles];
+  return [...mappedAlgorithmsReadmeFiles];
 };
 
 export default getPostsPaths;
