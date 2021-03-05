@@ -108,7 +108,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
     const fileContent = await fs.readFile(
       join(
         serverRuntimeConfig.PROJECT_ROOT,
-        "./public/data/",
+        "./public/data/src/",
         // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
         // @ts-ignore
         ...context.params.slug,
