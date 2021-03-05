@@ -37,3 +37,5 @@ yarn-error.log*
 
 /javascript-algorithms/
 /src/data
+
+public/data
