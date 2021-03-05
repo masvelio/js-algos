@@ -64,7 +64,7 @@ const getPostsPaths = async () => {
   // console.log("????? tree2", JSON.stringify(tree2, null, 2));
 
   const algorithmsReadmeFiles = await glob(
-    "public/data/algorithms/**/README.md",
+    "public/data/src/algorithms/**/README.md",
   );
   // const algorithmsReadmeFiles2 = await glob(ddddd2 + "/**/README.md");
   // console.log("@@@ algorithmsReadmeFiles", algorithmsReadmeFiles);
