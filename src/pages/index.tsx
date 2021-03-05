@@ -1,81 +1,55 @@
 import {
   Link as ChakraLink,
-  Text,
-  Code,
   List,
+  Box,
   ListIcon,
   ListItem,
+  Link,
 } from "@chakra-ui/react";
-import { CheckCircleIcon, LinkIcon } from "@chakra-ui/icons";
-// import fs from "fs";
-import { join } from "path";
-import glob from "glob";
+import { CheckCircleIcon } from "@chakra-ui/icons";
 import { GetStaticProps } from "next";
-
+import NextLink from "next/link";
 import { Hero } from "../components/Hero";
 import { Container } from "../components/Container";
 import { Main } from "../components/Main";
 import { DarkModeSwitch } from "../components/DarkModeSwitch";
-import { CTA } from "../components/CTA";
-import { Footer } from "../components/Footer";
+import getPostsPaths from "../utils/getPostsPaths";
 
-const Index = () => (
-  <Container height="100vh">
-    <Hero />
-    <Main>
-      <Text>
-        Example repository of <Code>Next.js</Code> + <Code>chakra-ui</Code> +{" "}
-        <Code>typescript</Code>.
-      </Text>
+const Index = (props: { paths: any[] }) => {
+  const paths = props.paths.map((path) => path.params.slug.join("/"));
+  return (
+    <Container height="100vh">
+      <Hero />
+      <Main>
+        <List spacing={3} my={0}>
+          {paths.map((p: string) => (
+            <Box key={p}>
+              <NextLink href={`/test/${p}`} passHref>
+                <ListItem as={Link}>
+                  <ListIcon as={CheckCircleIcon} color="green.500" />
+                  <ChakraLink flexGrow={1} mr={2}>
+                    {p}
+                  </ChakraLink>
+                </ListItem>
+              </NextLink>
+            </Box>
+          ))}
+        </List>
+      </Main>
 
-      <List spacing={3} my={0}>
-        <ListItem>
-          <ListIcon as={CheckCircleIcon} color="green.500" />
-          <ChakraLink
-            isExternal
-            href="https://chakra-ui.com"
-            flexGrow={1}
-            mr={2}
-          >
-            Chakra UI <LinkIcon />
-          </ChakraLink>
-        </ListItem>
-        <ListItem>
-          <ListIcon as={CheckCircleIcon} color="green.500" />
-          <ChakraLink isExternal href="https://nextjs.org" flexGrow={1} mr={2}>
-            Next.js <LinkIcon />
-          </ChakraLink>
-        </ListItem>
-      </List>
-    </Main>
-
-    <DarkModeSwitch />
-    <Footer>
-      <Text>Next ❤️ Chakra</Text>
-    </Footer>
-    <CTA />
-  </Container>
-);
+      <DarkModeSwitch />
+    </Container>
+  );
+};
 
 export default Index;
 
 export const getStaticProps: GetStaticProps = async () => {
-  const algorithmsDir = join(process.cwd(), "src", "data", "algorithms");
-  // const dataStructuresDir = join(
-  //   process.cwd(),
-  //   "src",
-  //   "data",
-  //   "data-structures",
-  // );
-
-  glob(algorithmsDir + "**/**/**/**/*README.md", (_err, files) => {
-    // eslint-disable-next-line no-console
-    console.log("files", files);
-  });
+  const paths = await getPostsPaths();
 
   return {
     props: {
-      posts: [],
+      paths,
     },
   };
 };

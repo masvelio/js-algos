@@ -1,32 +1,38 @@
 import {
-  Link as ChakraLink,
   Heading,
   Code,
-  List,
-  ListIcon,
   UnorderedList,
   ListItem,
+  Breadcrumb,
+  Badge,
+  BreadcrumbItem,
 } from "@chakra-ui/react";
-import { CheckCircleIcon, LinkIcon } from "@chakra-ui/icons";
 import ReactMarkdown from "react-markdown";
 import { useRouter } from "next/router";
+import fs from "fs-extra";
 
 import { Container } from "src/components/Container";
 import { Main } from "src/components/Main";
 import { DarkModeSwitch } from "src/components/DarkModeSwitch";
-// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-// @ts-ignore
-import md from "./README.md";
 
-const Slug = () => {
+import { GetStaticProps } from "next";
+import { join } from "path";
+import getPostsPaths from "../../utils/getPostsPaths";
+
+const Slug = (props: any) => {
   const router = useRouter();
-  const slug = router.query.slug || [];
+  const slug = (router.query.slug || []) as string[];
 
-  console.log("slug", slug);
   return (
     <Container>
       <Main>
-        <h1>TESST page</h1>
+        <Breadcrumb separator="👉">
+          {slug.map((el) => (
+            <BreadcrumbItem key={el}>
+              <Badge>{el}</Badge>
+            </BreadcrumbItem>
+          ))}
+        </Breadcrumb>
         <ReactMarkdown
           renderers={{
             heading: (props) => {
@@ -50,32 +56,8 @@ const Slug = () => {
             },
           }}
         >
-          {md}
+          {props.fileContent}
         </ReactMarkdown>
-        <List spacing={3} my={0}>
-          <ListItem>
-            <ListIcon as={CheckCircleIcon} color="green.500" />
-            <ChakraLink
-              isExternal
-              href="https://chakra-ui.com"
-              flexGrow={1}
-              mr={2}
-            >
-              Chakra UI <LinkIcon />
-            </ChakraLink>
-          </ListItem>
-          <ListItem>
-            <ListIcon as={CheckCircleIcon} color="green.500" />
-            <ChakraLink
-              isExternal
-              href="https://nextjs.org"
-              flexGrow={1}
-              mr={2}
-            >
-              Next.js <LinkIcon />
-            </ChakraLink>
-          </ListItem>
-        </List>
       </Main>
 
       <DarkModeSwitch />
@@ -84,3 +66,34 @@ const Slug = () => {
 };
 
 export default Slug;
+
+export async function getStaticPaths() {
+  const paths = await getPostsPaths();
+
+  return {
+    paths,
+    fallback: false,
+  };
+}
+
+export const getStaticProps: GetStaticProps = async (context) => {
+  const path = join(
+    process.cwd(),
+    "src",
+    "data",
+    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // @ts-ignore
+    ...context.params.slug,
+    "README.md",
+  );
+
+  const fileContent = fs.readFileSync(path, "utf-8");
+
+  return {
+    props: {
+      posts: [],
+      slug: [],
+      fileContent,
+    },
+  };
+};
