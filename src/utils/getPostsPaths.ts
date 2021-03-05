@@ -10,6 +10,9 @@ const getPostsPaths = async () => {
     "data-structures",
   );
 
+  console.log('algorithmsDir', algorithmsDir);
+  console.log('dataStructuresDir', dataStructuresDir);
+
   const algorithmsReadmeFiles = await glob(algorithmsDir + "/**/README.md");
   const dataStructuresReadmeFiles = await glob(
     dataStructuresDir + "/**/README.md",

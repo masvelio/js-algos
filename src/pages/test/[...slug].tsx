@@ -69,6 +69,7 @@ export default Slug;
 
 export async function getStaticPaths() {
   const paths = await getPostsPaths();
+  console.log("paths", JSON.stringify(paths, null, 2));
 
   return {
     paths,
