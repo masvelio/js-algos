@@ -1,5 +1,6 @@
 import { join } from "path";
 import glob from "glob-promise";
+import dirTree from "directory-tree";
 
 const getPostsPaths = async () => {
   const algorithmsDir = join(process.cwd(), "src", "data", "algorithms");
@@ -12,6 +13,10 @@ const getPostsPaths = async () => {
 
   console.log("@@@ algorithmsDir", algorithmsDir);
   console.log("@@@ dataStructuresDir", dataStructuresDir);
+
+  const tree = dirTree(algorithmsDir, { extensions: /\.md/ });
+
+  console.log("????? tree", JSON.stringify(tree, null, 2));
 
   const algorithmsReadmeFiles = await glob(algorithmsDir + "/**/README.md");
   console.log("@@@ algorithmsReadmeFiles", algorithmsReadmeFiles);
