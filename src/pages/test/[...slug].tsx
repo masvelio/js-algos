@@ -10,6 +10,8 @@ import {
 import ReactMarkdown from "react-markdown";
 import { useRouter } from "next/router";
 import fs from "fs-extra";
+import getConfig from "next/config";
+const { serverRuntimeConfig } = getConfig();
 
 import { Container } from "src/components/Container";
 import { Main } from "src/components/Main";
@@ -90,7 +92,26 @@ export const getStaticProps: GetStaticProps = async (context) => {
   console.log("$$$$$ path", path);
   console.log("$$$$$ context.params.slug", context?.params?.slug);
 
-  const fileContent = fs.readFileSync(path, "utf-8");
+  console.log(
+    "serverRuntimeConfig.PROJECT_ROOT",
+    serverRuntimeConfig.PROJECT_ROOT,
+  );
+
+  const fileContent = await fs.readFile(
+    join(
+      serverRuntimeConfig.PROJECT_ROOT,
+      "./public/data/",
+      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+      // @ts-ignore
+      ...context.params.slug,
+      "README.md",
+    ),
+    "utf-8",
+  );
+
+  console.log("fileContent", fileContent);
+
+  // const fileContent = fs.readFileSync(path, "utf-8");
 
   return {
     props: {

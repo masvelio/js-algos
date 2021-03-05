@@ -80,7 +80,7 @@ const getPostsPaths = async () => {
       const short = fullPath.slice(index);
       const splitted = short.split("/");
       const slug = splitted.slice(0, splitted.length - 1);
-      console.log("@@@ slug", slug);
+      // console.log("@@@ slug", slug);
 
       return { params: { slug } };
     });
