@@ -5,20 +5,32 @@ import getConfig from "next/config";
 const { serverRuntimeConfig } = getConfig();
 
 const getPostsPaths = async () => {
-  console.log("dirTree", JSON.stringify(dirTree("./public")));
-  console.log("dirTree2", JSON.stringify(dirTree("./public")));
-  console.log("dirTree3", JSON.stringify(dirTree(process.cwd() + "/public")));
+  console.log("dirTree", JSON.stringify(dirTree("./public"), null, 2));
+  console.log("dirTree1", JSON.stringify(dirTree("./src/data"), null, 2));
+  console.log(
+    "dirTree1",
+    JSON.stringify(await glob("./public/**/README.md"), null, 2),
+  );
+  console.log("dirTree2", JSON.stringify(dirTree("./public"), null, 2));
+  console.log(
+    "dirTree3",
+    JSON.stringify(dirTree(process.cwd() + "/public"), null, 2),
+  );
   console.log(
     "dirTree4",
-    JSON.stringify(dirTree(join(process.cwd(), "/public"))),
+    JSON.stringify(dirTree(join(process.cwd(), "/public")), null, 2),
   );
   console.log(
     "dirTree5",
-    JSON.stringify(dirTree(resolve(process.cwd(), "/public"))),
+    JSON.stringify(dirTree(resolve(process.cwd(), "/public")), null, 2),
   );
   console.log(
     "dirTree6",
-    JSON.stringify(dirTree(serverRuntimeConfig.PROJECT_ROOT + "/public")),
+    JSON.stringify(
+      dirTree(serverRuntimeConfig.PROJECT_ROOT + "/public"),
+      null,
+      2,
+    ),
   );
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   // const algorithmsDir = join(process.cwd(), "public", "data", "algorithms");
