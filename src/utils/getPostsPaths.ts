@@ -5,12 +5,21 @@ import getConfig from "next/config";
 const { serverRuntimeConfig } = getConfig();
 
 const getPostsPaths = async () => {
-  console.log("dirTree", JSON.stringify(dirTree(".")));
-  console.log("dirTree2", JSON.stringify(dirTree("./")));
-  console.log("dirTree3", JSON.stringify(dirTree(process.cwd())));
-  console.log("dirTree4", JSON.stringify(dirTree(join(process.cwd()))));
-  console.log("dirTree5", JSON.stringify(dirTree(resolve(process.cwd()))));
-  console.log("dirTree6", JSON.stringify(dirTree(serverRuntimeConfig.PROJECT_ROOT)));
+  console.log("dirTree", JSON.stringify(dirTree("./public")));
+  console.log("dirTree2", JSON.stringify(dirTree("./public")));
+  console.log("dirTree3", JSON.stringify(dirTree(process.cwd() + "/public")));
+  console.log(
+    "dirTree4",
+    JSON.stringify(dirTree(join(process.cwd(), "/public"))),
+  );
+  console.log(
+    "dirTree5",
+    JSON.stringify(dirTree(resolve(process.cwd(), "/public"))),
+  );
+  console.log(
+    "dirTree6",
+    JSON.stringify(dirTree(serverRuntimeConfig.PROJECT_ROOT + "/public")),
+  );
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   // const algorithmsDir = join(process.cwd(), "public", "data", "algorithms");
   const dataStructuresDir = join(
