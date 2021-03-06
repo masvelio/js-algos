@@ -10,8 +10,8 @@ import {
 import ReactMarkdown from "react-markdown";
 import { useRouter } from "next/router";
 import fs from "fs-extra";
-import getConfig from "next/config";
-const { serverRuntimeConfig } = getConfig();
+// import getConfig from "next/config";
+// const { serverRuntimeConfig } = getConfig();
 
 import { Container } from "src/components/Container";
 import { Main } from "src/components/Main";
@@ -20,7 +20,7 @@ import { DarkModeSwitch } from "src/components/DarkModeSwitch";
 import { GetStaticProps } from "next";
 import { join } from "path";
 import getPostsPaths from "../../utils/getPostsPaths";
-import glob from "glob-promise";
+// import glob from "glob-promise";
 
 const Slug = (props: any) => {
   const router = useRouter();
@@ -72,7 +72,6 @@ export default Slug;
 
 export async function getStaticPaths() {
   const paths = await getPostsPaths();
-  // console.log("paths", JSON.stringify(paths, null, 2));
 
   return {
     paths,
@@ -81,11 +80,6 @@ export async function getStaticPaths() {
 }
 
 export const getStaticProps: GetStaticProps = async (context) => {
-  console.log(
-    "dirTree122",
-    JSON.stringify(await glob("public/**/README.md"), null, 2),
-  );
-
   const path = join(
     process.cwd(),
     "public",
@@ -96,28 +90,10 @@ export const getStaticProps: GetStaticProps = async (context) => {
     ...context.params.slug,
     "README.md",
   );
-  console.log("$$$$$ path", path);
-  console.log("$$$$$ context.params.slug", context?.params?.slug);
-
-  console.log(
-    "serverRuntimeConfig.PROJECT_ROOT",
-    serverRuntimeConfig.PROJECT_ROOT,
-  );
 
   try {
-    const fileContent = await fs.readFile(
-      join(
-        serverRuntimeConfig.PROJECT_ROOT,
-        "./public/data/src/",
-        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-        // @ts-ignore
-        ...context.params.slug,
-        "README.md",
-      ),
-      "utf-8",
-    );
+    const fileContent = await fs.readFile(path, "utf-8");
 
-    console.log("fileContent", fileContent);
     return {
       props: {
         posts: [],
@@ -126,7 +102,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
       },
     };
   } catch (err) {
-    console.log("error", err);
+    console.log("Error on building site:", err);
     return {
       props: {
         posts: [],
@@ -135,14 +111,4 @@ export const getStaticProps: GetStaticProps = async (context) => {
       },
     };
   }
-
-  // const fileContent = fs.readFileSync(path, "utf-8");
-
-  // return {
-  //   props: {
-  //     posts: [],
-  //     slug: [],
-  //     fileContent,
-  //   },
-  // };
 };
