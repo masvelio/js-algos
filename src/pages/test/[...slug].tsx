@@ -9,16 +9,14 @@ import {
 } from "@chakra-ui/react";
 import ReactMarkdown from "react-markdown";
 import { useRouter } from "next/router";
+import { GetStaticProps } from "next";
 import fs from "fs-extra";
+import { join } from "path";
 
 import { Container } from "src/components/Container";
 import { Main } from "src/components/Main";
 import { DarkModeSwitch } from "src/components/DarkModeSwitch";
-
-import { GetStaticProps } from "next";
-import { join } from "path";
-import getPostsPaths from "../../utils/getPostsPaths";
-// import glob from "glob-promise";
+import getPostsPaths from "src/utils/getPostsPaths";
 
 const Slug = (props: any) => {
   const router = useRouter();
@@ -78,35 +76,22 @@ export async function getStaticPaths() {
 }
 
 export const getStaticProps: GetStaticProps = async (context) => {
+  const slug = context?.params?.slug as string[];
+
   const path = join(
     process.cwd(),
     "public",
     "data",
     "src",
-    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-    // @ts-ignore
-    ...context.params.slug,
+    ...slug,
     "README.md",
   );
 
-  try {
-    const fileContent = await fs.readFile(path, "utf-8");
+  const fileContent = await fs.readFile(path, "utf-8");
 
-    return {
-      props: {
-        posts: [],
-        slug: [],
-        fileContent,
-      },
-    };
-  } catch (err) {
-    console.log("Error on building site:", err);
-    return {
-      props: {
-        posts: [],
-        slug: [],
-        fileContent: "error",
-      },
-    };
-  }
+  return {
+    props: {
+      fileContent,
+    },
+  };
 };
