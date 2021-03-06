@@ -10,8 +10,6 @@ import {
 import ReactMarkdown from "react-markdown";
 import { useRouter } from "next/router";
 import fs from "fs-extra";
-// import getConfig from "next/config";
-// const { serverRuntimeConfig } = getConfig();
 
 import { Container } from "src/components/Container";
 import { Main } from "src/components/Main";
