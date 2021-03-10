@@ -13,7 +13,6 @@ import {
 } from "@chakra-ui/react";
 import { AnimatePresence, motion, useElementScroll } from "framer-motion";
 import useRouteChanged from "src/hooks/use-route-changed";
-// import { getRoutes } from "layouts/mdx";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
 import * as React from "react";
@@ -22,6 +21,8 @@ import { RemoveScroll } from "react-remove-scroll";
 import Logo from "./Logo";
 import { SidebarContent } from "./sidebar/Sidebar";
 import SponsorButton from "./SponsorButton";
+import { getRoutes } from "../pages/resources";
+// import logosvg from 'public/logo.svg';
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
 // @ts-ignore
@@ -116,6 +117,7 @@ export function MobileNavContent(props: MobileNavContentProps) {
               <Box>
                 <Flex justify="space-between" px="6" pt="5" pb="4">
                   <Logo />
+                  {/*<img alt="cojest?" src={"/logo.svg"} />*/}
                   <HStack spacing="5">
                     <SponsorButton display="flex" />
                     {/*// @ts-ignore*/}
@@ -140,8 +142,7 @@ export function MobileNavContent(props: MobileNavContentProps) {
               >
                 <SidebarContent
                   pathname={pathname}
-                  // routes={getRoutes(pathname)}
-                  routes={[]}
+                  routes={getRoutes("/resources")}
                 />
               </ScrollView>
             </Flex>

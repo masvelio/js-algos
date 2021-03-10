@@ -57,24 +57,39 @@
 import {
   Box,
   Button,
+  Link as ChakraLink,
   Center,
   chakra,
   Img,
   Stack,
   Text,
+  Link,
+  List,
+  ListItem,
+  ListIcon,
   useColorModeValue,
 } from "@chakra-ui/react";
-import NextLink from "next/link";
 import * as React from "react";
 import { DiGithubBadge } from "react-icons/di";
 import { FaArrowRight } from "react-icons/fa";
+import NextLink from "next/link";
 
+import { DarkModeSwitch } from "src/components/DarkModeSwitch";
 import Container from "src/components/Container";
 import { Footer } from "src/components/Footer";
 import Header from "src/components/Header";
 import SEO from "src/components/SEO";
+import { createDirectoryTree } from "../utils/getPostsPaths";
+import { GetStaticProps } from "next";
+import { Main } from "../components/Main";
+import { Hero } from "../components/Hero";
+import { CheckCircleIcon } from "@chakra-ui/icons";
 
-const HomePage = () => {
+const HomePage = (props: any) => {
+  const paths = props.paths.map((path: { params: { slug: any[] } }) =>
+    path.params.slug.join("/"),
+  );
+
   return (
     <>
       <SEO
@@ -179,6 +194,28 @@ const HomePage = () => {
               </Box>
             </Center>
           </Container>
+
+          <Container height="100vh">
+            <Hero />
+            <Main>
+              <List spacing={3} my={0}>
+                {paths.map((p: string) => (
+                  <Box key={p}>
+                    <NextLink href={`/test/${p}`} passHref>
+                      <ListItem as={Link}>
+                        <ListIcon as={CheckCircleIcon} color="green.500" />
+                        <ChakraLink flexGrow={1} mr={2}>
+                          {p}
+                        </ChakraLink>
+                      </ListItem>
+                    </NextLink>
+                  </Box>
+                ))}
+              </List>
+            </Main>
+
+            <DarkModeSwitch />
+          </Container>
         </Box>
 
         <Footer />
@@ -187,14 +224,17 @@ const HomePage = () => {
   );
 };
 
-export async function getStaticProps() {
+export const getStaticProps: GetStaticProps = async () => {
+  // const paths = await getPostsPaths();
+  const tree = createDirectoryTree();
+  const paths3 = tree.map((el) => ({ params: { slug: el.slug } }));
+
   return {
     props: {
-      members: [],
-      contributors: [],
-      sponsors: [],
+      paths: paths3,
+      tree,
     },
   };
-}
+};
 
 export default HomePage;

@@ -16,7 +16,7 @@ import { join } from "path";
 import { Container } from "src/components/Container";
 import { Main } from "src/components/Main";
 import { DarkModeSwitch } from "src/components/DarkModeSwitch";
-import getPostsPaths from "src/utils/getPostsPaths";
+import { createDirectoryTree } from "src/utils/getPostsPaths";
 
 const Slug = (props: any) => {
   const router = useRouter();
@@ -67,10 +67,12 @@ const Slug = (props: any) => {
 export default Slug;
 
 export async function getStaticPaths() {
-  const paths = await getPostsPaths();
+  // const paths = await getPostsPaths();
+  const paths2 = await createDirectoryTree();
+  const paths3 = paths2.map((el) => ({ params: { slug: el.slug } }));
 
   return {
-    paths,
+    paths: paths3,
     fallback: false,
   };
 }

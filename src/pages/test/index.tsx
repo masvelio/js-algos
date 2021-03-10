@@ -9,7 +9,6 @@ import {
 } from "@chakra-ui/react";
 import { CheckCircleIcon, LinkIcon } from "@chakra-ui/icons";
 import ReactMarkdown from "react-markdown";
-import { useRouter } from "next/router";
 
 import { Container } from "src/components/Container";
 import { Main } from "src/components/Main";
@@ -19,10 +18,6 @@ import { DarkModeSwitch } from "src/components/DarkModeSwitch";
 import md from "./README.md";
 
 const Slug = () => {
-  const router = useRouter();
-  const slug = router.query.slug || [];
-
-  console.log("slug", slug);
   return (
     <Container>
       <Main>
