@@ -84,7 +84,7 @@ const HomePage = (props: any) => {
                 justify="center"
                 direction={{ base: "column", sm: "row" }}
               >
-                <NextLink href="/resources" passHref>
+                <NextLink href="/algorithms" passHref>
                   <Button
                     h="4rem"
                     px="40px"
@@ -119,7 +119,7 @@ const HomePage = (props: any) => {
                 <List spacing={3} my={0}>
                   {paths.map((p: string) => (
                     <Box key={p}>
-                      <NextLink href={`/test/${p}`} passHref>
+                      <NextLink href={`/${p}`} passHref>
                         <ListItem as={Link}>
                           <ListIcon as={CheckCircleIcon} color="orange" />
                           <ChakraLink flexGrow={1} mr={2}>

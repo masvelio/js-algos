@@ -10,6 +10,8 @@ import {
   useBreakpointValue,
   useColorModeValue,
   useUpdateEffect,
+  Wrap,
+  WrapItem,
 } from "@chakra-ui/react";
 import { AnimatePresence, motion, useElementScroll } from "framer-motion";
 import useRouteChanged from "src/hooks/use-route-changed";
@@ -21,8 +23,7 @@ import { RemoveScroll } from "react-remove-scroll";
 import Logo from "./Logo";
 import { SidebarContent } from "./sidebar/Sidebar";
 import SponsorButton from "./SponsorButton";
-import { getRoutes } from "../pages/resources";
-// import logosvg from 'public/logo.svg';
+import resourcesSidebar from "src/guides-sidebar.json";
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
 // @ts-ignore
@@ -41,12 +42,13 @@ function NavLink({ href, children }) {
         rounded="md"
         transition="0.2s all"
         fontWeight={isActive ? "semibold" : "medium"}
-        bg={isActive ? "teal.400" : undefined}
+        bg={isActive ? "#FF8008" : undefined}
         borderWidth={isActive ? undefined : "1px"}
         color={isActive ? "white" : undefined}
+        px={2}
         _hover={{
           bg: isActive
-            ? "teal.500"
+            ? "#FF8008"
             : useColorModeValue("gray.100", "whiteAlpha.100"),
         }}
       >
@@ -125,13 +127,23 @@ export function MobileNavContent(props: MobileNavContentProps) {
                   </HStack>
                 </Flex>
                 <Box px="6" pb="6" pt="2" shadow={shadow}>
-                  <HStack>
-                    <NavLink href="/docs/getting-started">Docs</NavLink>
-                    <NavLink href="/guides/integrations/with-cra">
-                      Guides
-                    </NavLink>
-                    <NavLink href="/team">Team</NavLink>
-                  </HStack>
+                  <Wrap spacing="5" justify="center">
+                    <WrapItem>
+                      <NavLink href="/algorithms">Algorithms</NavLink>
+                    </WrapItem>
+                    <WrapItem>
+                      <NavLink href="/data-structures">Data Structures</NavLink>
+                    </WrapItem>
+                    <WrapItem>
+                      <NavLink href="/articles">Articles</NavLink>
+                    </WrapItem>
+                    <WrapItem>
+                      <NavLink href="/videos">Videos</NavLink>
+                    </WrapItem>
+                    <WrapItem>
+                      <NavLink href="/courses">Courses</NavLink>
+                    </WrapItem>
+                  </Wrap>
                 </Box>
               </Box>
 
@@ -142,7 +154,7 @@ export function MobileNavContent(props: MobileNavContentProps) {
               >
                 <SidebarContent
                   pathname={pathname}
-                  routes={getRoutes("/resources")}
+                  routes={resourcesSidebar.routes}
                 />
               </ScrollView>
             </Flex>

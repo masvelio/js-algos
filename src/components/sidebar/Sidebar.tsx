@@ -19,12 +19,12 @@ import { Routes } from "src/utils/get-route-context";
 import SidebarCategory from "./SidebarCategory";
 import SidebarLink from "./SidebarLink";
 import {
-  BlogIcon,
-  DocsIcon,
-  GuidesIcon,
-  TeamIcon,
-  ResourcesIcon,
-} from "./SidebarIcons";
+  BiNetworkChart,
+  BiLayer,
+  BiBookOpen,
+  BiVideoRecording,
+  BiGlasses,
+} from "react-icons/bi";
 
 export type SidebarContentProps = Routes & {
   pathname?: string;
@@ -125,7 +125,7 @@ const MainNavLink = ({ href, icon, children }) => {
         color={active ? linkColor : "gray.500"}
         _hover={{ color: linkColor }}
       >
-        <Center w="6" h="6" bg="teal.400" rounded="base" mr="3">
+        <Center w="6" h="6" bg="#FF8008" rounded="base" mr="3">
           {icon}
         </Center>
         {children}
@@ -136,29 +136,29 @@ const MainNavLink = ({ href, icon, children }) => {
 
 const mainNavLinks = [
   {
-    icon: <DocsIcon />,
-    href: "/docs/getting-started",
-    label: "Docs",
+    icon: <BiNetworkChart color="white" size={18} />,
+    href: "/algorithms",
+    label: "Algorithms",
   },
   {
-    icon: <GuidesIcon />,
-    href: "/guides/integrations/with-cra",
-    label: "Guides",
+    icon: <BiLayer color="white" size={18} />,
+    href: "/data-structures",
+    label: "Data Structures",
   },
   {
-    icon: <ResourcesIcon />,
-    href: "/resources",
-    label: "Resources",
+    icon: <BiBookOpen color="white" size={18} />,
+    href: "/articles",
+    label: "Articles",
   },
   {
-    icon: <TeamIcon />,
-    href: "/team",
-    label: "Team",
+    icon: <BiVideoRecording color="white" size={18} />,
+    href: "/videos",
+    label: "Videos",
   },
   {
-    icon: <BlogIcon />,
-    href: "/blog",
-    label: "Blog",
+    icon: <BiGlasses color="white" size={18} />,
+    href: "/courses",
+    label: "Courses",
   },
 ];
 

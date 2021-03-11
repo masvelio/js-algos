@@ -26,7 +26,7 @@ export function getRoutes(slug: string) {
   return sidebar?.routes ?? [];
 }
 
-function Resources() {
+function Courses() {
   /**
    * Re-use the docs sidebar so it's easier for a visitors
    * to reference components mentioned in the resource blog/video.
@@ -44,10 +44,7 @@ function Resources() {
           "A rich compilation of technical descriptions and detailed information of how Chakra UI works.",
       }}
     >
-      <Text mt="2">
-        A rich compilation of technical descriptions and detailed information of
-        how Chakra UI works.
-      </Text>
+      <Text mt="2">Courses!</Text>
 
       <Stack spacing="12">
         <ResourceSection
@@ -70,7 +67,7 @@ function Resources() {
   );
 }
 
-export default Resources;
+export default Courses;
 
 interface ResourceSectionProps {
   title: string;
@@ -87,7 +84,7 @@ function ResourceSection(props: ResourceSectionProps) {
           as={icon}
           display="inline-block"
           verticalAlign="middle"
-          color="teal.500"
+          color="#FF8008"
           mr="3"
         />
         <span>{title}</span>

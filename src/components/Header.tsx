@@ -133,7 +133,6 @@ function Header(props) {
       width="full"
       opacity={0.9}
       style={{ backdropFilter: "blur(3px)" }}
-      bord
       {...props}
     >
       <chakra.div height="4.5rem" mx="auto" maxW="1200px">
