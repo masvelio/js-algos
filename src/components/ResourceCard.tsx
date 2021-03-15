@@ -8,30 +8,41 @@ import {
   useColorModeValue,
   Wrap,
   WrapItem,
-} from "@chakra-ui/react"
-import * as React from "react"
+} from "@chakra-ui/react";
+import * as React from "react";
+import styled from "@emotion/styled";
+
+const StyledHeading = styled.span`
+  text-transform: capitalize;
+`;
 
 export interface Resource {
-  heading: string
-  type: "blog" | "talk" | "video"
-  description: string
-  url: string
-  author: string
-  tags?: string[]
+  heading: string;
+  type: "blog" | "talk" | "video";
+  description: string;
+  url: string;
+  author: string;
+  tags?: string[];
 }
 
 interface ResourceCardProps extends BoxProps {
-  data: Resource
+  data: Resource;
+  should?: boolean;
 }
 
-function ResourceCard(props: ResourceCardProps) {
-  const { data, ...rest } = props
-  const { heading, author, description, url, tags } = data
+function ResourceCard({ data, should }: ResourceCardProps) {
+  if (!should) {
+    return null;
+  }
+  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+  // @ts-ignore
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { description, url, categories, slug, name } = data;
 
   return (
-    <Box {...rest} maxW="360px">
+    <Box maxW="360px">
       <Wrap className="algolia-exclude" spacing="3" mb="2" align="center">
-        {tags?.map((tag, index) => (
+        {categories?.map((category: string, index: number) => (
           <WrapItem key={index}>
             <Badge
               as="a"
@@ -41,25 +52,22 @@ function ResourceCard(props: ResourceCardProps) {
               fontSize="xs"
               fontWeight="bold"
             >
-              {tag}
+              {category}
             </Badge>
           </WrapItem>
         ))}
       </Wrap>
 
       <Heading as="h3" size="sm">
-        <Link isExternal href={url}>
-          <span className="content">{heading}</span>
+        <Link href={slug?.join("/")}>
+          <StyledHeading className="content">{name}</StyledHeading>
         </Link>
       </Heading>
-      <Text fontSize="sm" color="gray.500" mt="2">
-        by {author}
-      </Text>
       <Text lineHeight="tall" py={2} opacity={0.8}>
         {description}
       </Text>
     </Box>
-  )
+  );
 }
 
-export default ResourceCard
+export default ResourceCard;

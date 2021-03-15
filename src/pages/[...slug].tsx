@@ -79,7 +79,6 @@ const Slug = (props: any) => {
 export default Slug;
 
 export async function getStaticPaths() {
-  // const paths = await getPostsPaths();
   const paths2 = await createDirectoryTree();
   const paths3 = paths2.map((el) => ({ params: { slug: el.slug } }));
 

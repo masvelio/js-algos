@@ -142,7 +142,6 @@ const HomePage = (props: any) => {
 };
 
 export const getStaticProps: GetStaticProps = async () => {
-  // const paths = await getPostsPaths();
   const tree = createDirectoryTree();
   const paths3 = tree.map((el) => ({ params: { slug: el.slug } }));
 

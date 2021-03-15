@@ -1,10 +1,5 @@
-import glob from "glob-promise";
 import dirTree from "directory-tree";
 import { join } from "path";
-
-type ParamWithSlug = {
-  params: { slug: string[] };
-};
 
 const fileCb = (path: any, readmePaths: any[]) => {
   // README.md means it only takes English version of the file is
@@ -27,23 +22,25 @@ const createSlugFromPath = (path: string) => {
   const short = path.slice(index);
   const splitted = short.split("/");
   const slug = splitted.slice(1, splitted.length - 1);
-  const categories = slug.slice(0, slug.length - 1);
+  const categories = slug.slice(1, slug.length - 1);
   const name = slug[slug.length - 1];
   const parsedName = mapDashStringToPascalCase(name);
   const parsedCategories = mapDashStringToPascalCase(categories);
+  const description =
+    "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when";
 
-  return { categories: parsedCategories, slug, name: parsedName };
+  return { categories: parsedCategories, slug, name: parsedName, description };
 };
 const createListOfPages = (readmePaths: any[]) => {
   return readmePaths.map(({ path }) => {
-    const { slug, categories, name } = createSlugFromPath(path);
+    const { slug, categories, name, description } = createSlugFromPath(path);
 
     return {
       path,
       slug,
       categories,
       name,
-      // description,
+      description,
     };
   });
 };
@@ -52,52 +49,15 @@ export const createDirectoryTree = () => {
   const path = join(process.cwd(), "public", "data", "src");
   const readmePaths: string | any[] = [];
 
-  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-  // @ts-ignore
-  const tree = dirTree(path, { extensions: /\.md/ }, (_item, path) =>
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  dirTree(path, { extensions: /\.md/ }, (_item, path) =>
     fileCb(path, readmePaths),
   );
 
-  const obj = createListOfPages(readmePaths);
-
-  return obj;
+  return createListOfPages(readmePaths);
 };
 
-/**
- * @param {"algorithms" | "data-structures"} category
- * @param {string} fullPath eg. public/data/src/data-structures/tree/red-black-tree/README.md
- * @return {{ params: { slug: string[] }} eg. {params: { slug: [ 'data-structures', 'tree', 'red-black-tree' ]}}
- * */
-const getSlugFromPath = (
-  category: "algorithms" | "data-structures",
-  fullPath: string,
-): ParamWithSlug => {
-  const index = fullPath.indexOf(category);
-  const short = fullPath.slice(index);
-  const splitted = short.split("/");
-  const slug = splitted.slice(0, splitted.length - 1);
-
-  return { params: { slug } };
+export const getPathsByMainSlug = (slug: "algorithms" | "data-structures") => {
+  const tree = createDirectoryTree();
+  return tree.filter((el) => el.slug.includes(slug));
 };
-
-const getPostsPaths = async (): Promise<Array<ParamWithSlug>> => {
-  const algorithmsReadmeFiles = await glob(
-    "public/data/src/algorithms/**/README.md",
-  );
-
-  const dataStructuresReadmeFiles = await glob(
-    "public/data/src/data-structures/**/README.md",
-  );
-
-  const mappedAlgorithmsReadmeFiles = algorithmsReadmeFiles.map((fullPath) =>
-    getSlugFromPath("algorithms", fullPath),
-  );
-
-  const mappedDataStructuresReadmeFiles = dataStructuresReadmeFiles.map(
-    (fullPath) => getSlugFromPath("data-structures", fullPath),
-  );
-
-  return [...mappedAlgorithmsReadmeFiles, ...mappedDataStructuresReadmeFiles];
-};
-
-export default getPostsPaths;
