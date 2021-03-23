@@ -6,11 +6,9 @@ import { Box, SimpleGrid, Stack, Text } from "@chakra-ui/react";
 import PageContainer from "src/components/PageContainer";
 import ResourceCard, { Resource } from "src/components/ResourceCard";
 import Sidebar from "src/components/sidebar/Sidebar";
-// import resources from "src/resources.json";
 import resourcesSidebar from "src/guides-sidebar.json";
 import { GetStaticProps } from "next";
-import { getPathsByMainSlug } from "../utils/getPostsPaths";
-
+import { getPathsByMainSlug } from "src/utils/getPostsPaths";
 export function getRoutes(slug: string) {
   const configMap = {
     "/resources": resourcesSidebar,
@@ -30,18 +28,11 @@ export function getRoutes(slug: string) {
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
 // @ts-ignore
-function Algorithms({ algoPaths }) {
-  /**
-   * Re-use the docs sidebar so it's easier for a visitors
-   * to reference components mentioned in the resource blog/video.
-   */
-  const routes = getRoutes("/resources");
-  // const data = resources.data as Resource[];
-  // const groups = _.groupBy(data, "type");
-
+function Index({ algoPaths }) {
+  console.log("???????");
   return (
     <PageContainer
-      sidebar={<Sidebar routes={routes} />}
+      sidebar={<Sidebar routes={algoPaths} />}
       frontmatter={{
         title: "Community Resources",
         description:
@@ -54,7 +45,6 @@ function Algorithms({ algoPaths }) {
         <ResourceSection
           title="Talks"
           resources={algoPaths}
-          // resources={groups.talk}
           icon={FaMicrophone}
         />
       </Stack>
@@ -62,7 +52,7 @@ function Algorithms({ algoPaths }) {
   );
 }
 
-export default Algorithms;
+export default Index;
 
 export const getStaticProps: GetStaticProps = async () => {
   const algoPaths = getPathsByMainSlug("algorithms");

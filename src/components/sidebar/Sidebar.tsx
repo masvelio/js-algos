@@ -3,7 +3,6 @@ import { useRouter } from "next/router";
 import * as React from "react";
 import _ from "lodash";
 import {
-  Badge,
   Box,
   Center,
   chakra,
@@ -25,14 +24,32 @@ import {
   BiVideoRecording,
   BiGlasses,
 } from "react-icons/bi";
+import styled from "@emotion/styled";
 
 export type SidebarContentProps = Routes & {
   pathname?: string;
   contentRef?: any;
 };
 
+const Capitalized = styled.span`
+  text-transform: capitalize;
+`;
 export function SidebarContent(props: SidebarContentProps) {
   const { routes, pathname, contentRef } = props;
+
+  const groups = _.groupBy(routes, "categories");
+
+  return (
+    <>
+      {Object.keys(groups).map((key) => (
+        <SidebarLink ml="-3" mt="2" key={key} href={`/algorithms/${key}`}>
+          <Capitalized>{key}</Capitalized>
+        </SidebarLink>
+      ))}
+    </>
+  );
+
+  // eslint-disable-next-line no-unreachable
   return (
     <>
       {routes.map((lvl1, idx) => {
@@ -80,18 +97,7 @@ export function SidebarContent(props: SidebarContentProps) {
                   <Stack as="ul">
                     {sortedRoutes.map((lvl3) => (
                       <SidebarLink as="li" key={lvl3.path} href={lvl3.path}>
-                        <span>{lvl3.title}</span>
-                        {lvl3.new && (
-                          <Badge
-                            ml="2"
-                            lineHeight="tall"
-                            fontSize="10px"
-                            variant="solid"
-                            colorScheme="purple"
-                          >
-                            New
-                          </Badge>
-                        )}
+                        <span>{lvl3.title} @@@</span>
                       </SidebarLink>
                     ))}
                   </Stack>

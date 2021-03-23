@@ -1,15 +1,4 @@
-import {
-  Box,
-  Button,
-  Link as ChakraLink,
-  chakra,
-  Stack,
-  Text,
-  Link,
-  List,
-  ListItem,
-  ListIcon,
-} from "@chakra-ui/react";
+import { Box, Button, chakra, Stack, Text } from "@chakra-ui/react";
 import * as React from "react";
 import { DiGithubBadge } from "react-icons/di";
 import { FaArrowRight } from "react-icons/fa";
@@ -19,16 +8,8 @@ import Container from "src/components/Container";
 import { Footer } from "src/components/Footer";
 import Header from "src/components/Header";
 import SEO from "src/components/SEO";
-import { createDirectoryTree } from "../utils/getPostsPaths";
-import { GetStaticProps } from "next";
-import { Main } from "../components/Main";
-import { CheckCircleIcon } from "@chakra-ui/icons";
 
-const HomePage = (props: any) => {
-  const paths = props.paths.map((path: { params: { slug: any[] } }) =>
-    path.params.slug.join("/"),
-  );
-
+const HomePage = () => {
   return (
     <>
       <SEO
@@ -112,45 +93,12 @@ const HomePage = (props: any) => {
               </Stack>
             </Box>
           </Container>
-
-          <Container>
-            <Box textAlign="center">
-              <Main>
-                <List spacing={3} my={0}>
-                  {paths.map((p: string) => (
-                    <Box key={p}>
-                      <NextLink href={`/${p}`} passHref>
-                        <ListItem as={Link}>
-                          <ListIcon as={CheckCircleIcon} color="orange" />
-                          <ChakraLink flexGrow={1} mr={2}>
-                            {p}
-                          </ChakraLink>
-                        </ListItem>
-                      </NextLink>
-                    </Box>
-                  ))}
-                </List>
-              </Main>
-            </Box>
-          </Container>
         </Box>
 
         <Footer />
       </Box>
     </>
   );
-};
-
-export const getStaticProps: GetStaticProps = async () => {
-  const tree = createDirectoryTree();
-  const paths3 = tree.map((el) => ({ params: { slug: el.slug } }));
-
-  return {
-    props: {
-      paths: paths3,
-      tree,
-    },
-  };
 };
 
 export default HomePage;

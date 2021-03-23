@@ -38,6 +38,9 @@ function ResourceCard({ data, should }: ResourceCardProps) {
   // @ts-ignore
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { description, url, categories, slug, name } = data;
+  // @ts-ignore
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [prefix, ...newSlug] = slug;
 
   return (
     <Box maxW="360px">
@@ -59,7 +62,7 @@ function ResourceCard({ data, should }: ResourceCardProps) {
       </Wrap>
 
       <Heading as="h3" size="sm">
-        <Link href={slug?.join("/")}>
+        <Link href={newSlug?.join("/")}>
           <StyledHeading className="content">{name}</StyledHeading>
         </Link>
       </Heading>
