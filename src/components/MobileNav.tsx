@@ -66,7 +66,7 @@ interface MobileNavContentProps {
 export function MobileNavContent(props: MobileNavContentProps) {
   const { isOpen, onClose } = props;
   const closeBtnRef = React.useRef<HTMLButtonElement>();
-  const { pathname } = useRouter();
+  const { pathname, asPath } = useRouter();
 
   useRouteChanged(onClose);
 
@@ -155,6 +155,7 @@ export function MobileNavContent(props: MobileNavContentProps) {
                 <SidebarContent
                   pathname={pathname}
                   routes={resourcesSidebar.routes}
+                  asPath={asPath}
                 />
               </ScrollView>
             </Flex>

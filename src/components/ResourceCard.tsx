@@ -11,8 +11,9 @@ import {
 } from "@chakra-ui/react";
 import * as React from "react";
 import styled from "@emotion/styled";
+import NextLink from "next/link";
 
-const StyledHeading = styled.span`
+const StyledHeading = styled(Link)`
   text-transform: capitalize;
 `;
 
@@ -37,10 +38,7 @@ function ResourceCard({ data, should }: ResourceCardProps) {
   // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
   // @ts-ignore
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { description, url, categories, slug, name } = data;
-  // @ts-ignore
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [prefix, ...newSlug] = slug;
+  const { description, categories, name, shortSlug } = data;
 
   return (
     <Box maxW="360px">
@@ -62,9 +60,9 @@ function ResourceCard({ data, should }: ResourceCardProps) {
       </Wrap>
 
       <Heading as="h3" size="sm">
-        <Link href={newSlug?.join("/")}>
+        <NextLink href={`${shortSlug?.join("/")}`}>
           <StyledHeading className="content">{name}</StyledHeading>
-        </Link>
+        </NextLink>
       </Heading>
       <Text lineHeight="tall" py={2} opacity={0.8}>
         {description}

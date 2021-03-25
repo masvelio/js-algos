@@ -5,17 +5,14 @@ import _ from "lodash";
 import {
   Box,
   Center,
-  chakra,
   Flex,
   List,
   ListItem,
   ListProps,
-  Stack,
+  Text,
   useColorModeValue,
 } from "@chakra-ui/react";
-import { Routes } from "src/utils/get-route-context";
 // import { convertBackticksToInlineCode } from "utils/convert-backticks-to-inline-code";
-import SidebarCategory from "./SidebarCategory";
 import SidebarLink from "./SidebarLink";
 import {
   BiNetworkChart,
@@ -24,89 +21,31 @@ import {
   BiVideoRecording,
   BiGlasses,
 } from "react-icons/bi";
-import styled from "@emotion/styled";
 
-export type SidebarContentProps = Routes & {
-  pathname?: string;
-  contentRef?: any;
-};
-
-const Capitalized = styled.span`
-  text-transform: capitalize;
-`;
-export function SidebarContent(props: SidebarContentProps) {
-  const { routes, pathname, contentRef } = props;
-
+// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+// @ts-ignore
+export function SidebarContent(props) {
+  const { routes, asPath } = props;
+  const linkColor = useColorModeValue("gray.900", "whiteAlpha.900");
   const groups = _.groupBy(routes, "categories");
+  const splittedAsPath = asPath.split("/");
+  const checkPath = splittedAsPath[splittedAsPath.length - 1];
 
   return (
     <>
       {Object.keys(groups).map((key) => (
         <SidebarLink ml="-3" mt="2" key={key} href={`/algorithms/${key}`}>
-          <Capitalized>{key}</Capitalized>
+          <Text
+            transitionProperty="colors"
+            transitionDuration="200ms"
+            textTransform="capitalize"
+            color={decodeURI(checkPath) === key ? linkColor : "gray.500"}
+            _hover={{ color: linkColor }}
+          >
+            {key}
+          </Text>
         </SidebarLink>
       ))}
-    </>
-  );
-
-  // eslint-disable-next-line no-unreachable
-  return (
-    <>
-      {routes.map((lvl1, idx) => {
-        return (
-          <React.Fragment key={idx}>
-            {lvl1.heading && (
-              <chakra.h4
-                fontSize="sm"
-                fontWeight="bold"
-                my="1.25rem"
-                textTransform="uppercase"
-                letterSpacing="wider"
-                color={useColorModeValue("gray.700", "inherit")}
-              >
-                {lvl1.title}
-              </chakra.h4>
-            )}
-
-            {lvl1?.routes?.map((lvl2, index) => {
-              if (!lvl2.routes) {
-                return (
-                  <SidebarLink ml="-3" mt="2" key={lvl2.path} href={lvl2.path}>
-                    {lvl2.title}
-                  </SidebarLink>
-                );
-              }
-
-              const selected = pathname?.startsWith(lvl2.path as string);
-              const opened = selected || lvl2.open;
-
-              const sortedRoutes = lvl2.sort
-                ? _.sortBy(lvl2.routes, (i) => i.title)
-                : lvl2.routes;
-
-              return (
-                <SidebarCategory
-                  contentRef={contentRef}
-                  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-                  // @ts-ignore
-                  key={lvl2.path + index}
-                  title={lvl2.title}
-                  selected={selected}
-                  opened={opened}
-                >
-                  <Stack as="ul">
-                    {sortedRoutes.map((lvl3) => (
-                      <SidebarLink as="li" key={lvl3.path} href={lvl3.path}>
-                        <span>{lvl3.title} @@@</span>
-                      </SidebarLink>
-                    ))}
-                  </Stack>
-                </SidebarCategory>
-              );
-            })}
-          </React.Fragment>
-        );
-      })}
     </>
   );
 }
@@ -185,7 +124,7 @@ const MainNavLinkGroup = (props: ListProps) => {
 // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
 // @ts-ignore
 const Sidebar = ({ routes }) => {
-  const { pathname } = useRouter();
+  const { pathname, asPath } = useRouter();
   const ref = React.useRef<HTMLDivElement>(null);
 
   return (
@@ -210,7 +149,12 @@ const Sidebar = ({ routes }) => {
       display={{ base: "none", md: "block" }}
     >
       <MainNavLinkGroup mb="10" />
-      <SidebarContent routes={routes} pathname={pathname} contentRef={ref} />
+      <SidebarContent
+        routes={routes}
+        pathname={pathname}
+        asPath={asPath}
+        contentRef={ref}
+      />
     </Box>
   );
 };

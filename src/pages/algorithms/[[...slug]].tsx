@@ -12,38 +12,21 @@ import {
   ListItem,
   SimpleGrid,
   Stack,
-  Text,
   UnorderedList,
 } from "@chakra-ui/react";
-import PageContainer from "src/components/PageContainer";
-import ResourceCard, { Resource } from "src/components/ResourceCard";
-import Sidebar from "src/components/sidebar/Sidebar";
-import resourcesSidebar from "src/guides-sidebar.json";
 import { GetStaticProps } from "next";
-import { getPathsByMainSlug } from "src/utils/getPostsPaths";
 import { join } from "path";
 import fs from "fs-extra";
-import { Main } from "../../components/Main";
 import ReactMarkdown from "react-markdown";
 import gfm from "remark-gfm";
 import { useRouter } from "next/router";
 import styled from "@emotion/styled";
-export function getRoutes(slug: string) {
-  const configMap = {
-    "/resources": resourcesSidebar,
-  };
 
-  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-  // @ts-ignore
-  const [_, sidebar] =
-    Object.entries(configMap).find(([path, _sidebar]) =>
-      slug.startsWith(path),
-    ) ?? [];
-
-  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-  // @ts-ignore
-  return sidebar?.routes ?? [];
-}
+import PageContainer from "src/components/PageContainer";
+import ResourceCard, { Resource } from "src/components/ResourceCard";
+import Sidebar from "src/components/sidebar/Sidebar";
+import { getPathsByMainPrefix } from "src/utils/getPostsPaths";
+import { Main } from "src/components/Main";
 
 const StyledCode = styled(Code)`
   white-space: pre-wrap;
@@ -51,7 +34,7 @@ const StyledCode = styled(Code)`
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
 // @ts-ignore
-function Index({ algoPaths, fileContent }) {
+function Index({ algoPaths, filteredAlgoPaths, fileContent }) {
   const router = useRouter();
   const slug = (router.query.slug || []) as string[];
   return (
@@ -106,11 +89,10 @@ function Index({ algoPaths, fileContent }) {
         </Main>
       ) : (
         <>
-          <Text mt="2">Algorithms!</Text>
           <Stack spacing="12">
             <ResourceSection
               title="Talks"
-              resources={algoPaths}
+              resources={filteredAlgoPaths}
               icon={FaMicrophone}
             />
           </Stack>
@@ -123,33 +105,33 @@ function Index({ algoPaths, fileContent }) {
 export default Index;
 
 export async function getStaticPaths() {
-  const algoPaths = getPathsByMainSlug("algorithms");
-  const categories = algoPaths.map((el) => ({
+  const algorithmsReadmePaths = getPathsByMainPrefix("algorithms");
+  const categories = algorithmsReadmePaths.map((el) => ({
     params: { slug: el.categories },
   }));
-  const paths = algoPaths.map((el) => {
-    // @ts-ignore
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const [prefix, ...rest] = el.slug;
-    return { params: { slug: rest } };
-  });
+  const paths = algorithmsReadmePaths.map((el) => ({
+    params: { slug: el.shortSlug },
+  }));
 
   return {
-    paths: [...categories, ...paths],
+    paths: [{ params: { slug: [""] } }, ...categories, ...paths],
     fallback: false,
   };
 }
 
 export const getStaticProps: GetStaticProps = async (context) => {
-  const algoPaths = getPathsByMainSlug("algorithms");
-  const slug = context?.params?.slug as string[];
+  const algoPaths = getPathsByMainPrefix("algorithms");
+  const slug = context?.params?.slug as undefined | string[];
+  const filteredAlgoPaths = algoPaths.filter((algo) =>
+    slug ? algo.categories.includes(slug[0]) : true,
+  );
   const path = join(
     process.cwd(),
     "public",
     "data",
     "src",
     "algorithms",
-    ...slug,
+    ...(slug || []),
     "README.md",
   );
 
@@ -158,6 +140,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
     return {
       props: {
         algoPaths,
+        filteredAlgoPaths,
         fileContent,
       },
     };
@@ -165,6 +148,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
     return {
       props: {
         algoPaths,
+        filteredAlgoPaths,
       },
     };
   }

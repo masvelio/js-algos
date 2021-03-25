@@ -22,6 +22,7 @@ const createSlugFromPath = (path: string) => {
   const short = path.slice(index);
   const splitted = short.split("/");
   const slug = splitted.slice(1, splitted.length - 1);
+  const shortSlug = slug.slice(1, splitted.length);
   const categories = slug.slice(1, slug.length - 1);
   const name = slug[slug.length - 1];
   const parsedName = mapDashStringToPascalCase(name);
@@ -29,13 +30,26 @@ const createSlugFromPath = (path: string) => {
   const description =
     "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when";
 
-  return { categories: parsedCategories, slug, name: parsedName, description };
+  return {
+    categories: parsedCategories,
+    slug,
+    shortSlug,
+    name: parsedName,
+    description,
+  };
 };
-const createListOfPages = (readmePaths: any[]) => {
-  return readmePaths.map(({ path }) => {
-    const { slug, categories, name, description } = createSlugFromPath(path);
+const createListOfPages = (readmeFilePaths: any[]) => {
+  return readmeFilePaths.map(({ path }) => {
+    const {
+      slug,
+      shortSlug,
+      categories,
+      name,
+      description,
+    } = createSlugFromPath(path);
 
     return {
+      shortSlug,
       path,
       slug,
       categories,
@@ -45,19 +59,20 @@ const createListOfPages = (readmePaths: any[]) => {
   });
 };
 
-export const createDirectoryTree = () => {
+const createDirectoryTree = () => {
   const path = join(process.cwd(), "public", "data", "src");
-  const readmePaths: string | any[] = [];
+  const readmeFilePaths: string | any[] = [];
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   dirTree(path, { extensions: /\.md/ }, (_item, path) =>
-    fileCb(path, readmePaths),
+    fileCb(path, readmeFilePaths),
   );
 
-  return createListOfPages(readmePaths);
+  return createListOfPages(readmeFilePaths);
 };
 
-export const getPathsByMainSlug = (slug: "algorithms" | "data-structures") => {
+export const getPathsByMainPrefix = (
+  prefix: "algorithms" | "data-structures",
+) => {
   const tree = createDirectoryTree();
-  return tree.filter((el) => el.slug.includes(slug));
+  return tree.filter((el) => el.slug.includes(prefix));
 };
