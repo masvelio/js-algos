@@ -25,27 +25,35 @@ import {
 // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
 // @ts-ignore
 export function SidebarContent(props) {
-  const { routes, asPath } = props;
+  const { routes, asPath, prefix } = props;
+  const groupByKey = prefix === "data-structures" ? "name" : "categories";
   const linkColor = useColorModeValue("gray.900", "whiteAlpha.900");
-  const groups = _.groupBy(routes, "categories");
+  const groups = _.groupBy(routes, groupByKey);
   const splittedAsPath = asPath.split("/");
   const checkPath = splittedAsPath[splittedAsPath.length - 1];
 
   return (
     <>
-      {Object.keys(groups).map((key) => (
-        <SidebarLink ml="-3" mt="2" key={key} href={`/algorithms/${key}`}>
-          <Text
-            transitionProperty="colors"
-            transitionDuration="200ms"
-            textTransform="capitalize"
-            color={decodeURI(checkPath) === key ? linkColor : "gray.500"}
-            _hover={{ color: linkColor }}
-          >
-            {key}
-          </Text>
-        </SidebarLink>
-      ))}
+      {Object.keys(groups).map((key) => {
+        const href =
+          prefix === "data-structures"
+            ? `/${prefix}/${groups[key][0].shortSlug.join("/")}`
+            : `/${prefix}/${key.replace(/ /gi, "-")}`;
+
+        return (
+          <SidebarLink ml="-3" mt="2" key={key} href={href}>
+            <Text
+              transitionProperty="colors"
+              transitionDuration="200ms"
+              textTransform="capitalize"
+              color={decodeURI(checkPath) === key ? linkColor : "gray.500"}
+              _hover={{ color: linkColor }}
+            >
+              {key}
+            </Text>
+          </SidebarLink>
+        );
+      })}
     </>
   );
 }
@@ -123,7 +131,7 @@ const MainNavLinkGroup = (props: ListProps) => {
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
 // @ts-ignore
-const Sidebar = ({ routes }) => {
+const Sidebar = ({ routes, prefix = "" }) => {
   const { pathname, asPath } = useRouter();
   const ref = React.useRef<HTMLDivElement>(null);
 
@@ -154,6 +162,7 @@ const Sidebar = ({ routes }) => {
         pathname={pathname}
         asPath={asPath}
         contentRef={ref}
+        prefix={prefix}
       />
     </Box>
   );

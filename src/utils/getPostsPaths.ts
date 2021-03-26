@@ -23,15 +23,16 @@ const createSlugFromPath = (path: string) => {
   const splitted = short.split("/");
   const slug = splitted.slice(1, splitted.length - 1);
   const shortSlug = slug.slice(1, splitted.length);
-  const categories = slug.slice(1, slug.length - 1);
+  const categoryArr = slug.slice(1, slug.length - 1);
+  const categories = categoryArr.length === 0 ? ["uncategorized"] : categoryArr;
   const name = slug[slug.length - 1];
   const parsedName = mapDashStringToPascalCase(name);
-  const parsedCategories = mapDashStringToPascalCase(categories);
+  // const parsedCategories = mapDashStringToPascalCase(categories);
   const description =
     "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when";
 
   return {
-    categories: parsedCategories,
+    categories,
     slug,
     shortSlug,
     name: parsedName,

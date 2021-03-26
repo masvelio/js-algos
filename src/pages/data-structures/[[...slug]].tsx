@@ -34,12 +34,24 @@ const StyledCode = styled(Code)`
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
 // @ts-ignore
-function Index({ algoPaths, filteredAlgoPaths, fileContent }) {
+function Index({
+  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+  // @ts-ignore
+  dataStructuresPaths,
+  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+  // @ts-ignore
+  filteredDataStructuresPaths,
+  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+  // @ts-ignore
+  fileContent,
+}) {
   const router = useRouter();
   const slug = (router.query.slug || []) as string[];
   return (
     <PageContainer
-      sidebar={<Sidebar routes={algoPaths} prefix="algorithms" />}
+      sidebar={
+        <Sidebar routes={dataStructuresPaths} prefix="data-structures" />
+      }
       frontmatter={{
         title: "Community Resources",
         description:
@@ -92,7 +104,7 @@ function Index({ algoPaths, filteredAlgoPaths, fileContent }) {
           <Stack spacing="12">
             <ResourceSection
               title="Talks"
-              resources={filteredAlgoPaths}
+              resources={filteredDataStructuresPaths}
               icon={FaMicrophone}
             />
           </Stack>
@@ -105,11 +117,11 @@ function Index({ algoPaths, filteredAlgoPaths, fileContent }) {
 export default Index;
 
 export async function getStaticPaths() {
-  const algorithmsReadmePaths = getPathsByMainPrefix("algorithms");
-  const categories = algorithmsReadmePaths.map((el) => ({
+  const dataStructuresReadmePaths = getPathsByMainPrefix("data-structures");
+  const categories = dataStructuresReadmePaths.map((el) => ({
     params: { slug: el.categories },
   }));
-  const paths = algorithmsReadmePaths.map((el) => ({
+  const paths = dataStructuresReadmePaths.map((el) => ({
     params: { slug: el.shortSlug },
   }));
 
@@ -120,17 +132,18 @@ export async function getStaticPaths() {
 }
 
 export const getStaticProps: GetStaticProps = async (context) => {
-  const algoPaths = getPathsByMainPrefix("algorithms");
+  const dataStructuresPaths = getPathsByMainPrefix("data-structures");
   const slug = context?.params?.slug as undefined | string[];
-  const filteredAlgoPaths = algoPaths.filter((algo) =>
-    slug ? algo.categories.includes(slug[0]) : true,
+  const filteredDataStructuresPaths = dataStructuresPaths.filter(
+    (dataStructure) =>
+      slug ? dataStructure.categories.includes(slug[0]) : true,
   );
   const path = join(
     process.cwd(),
     "public",
     "data",
     "src",
-    "algorithms",
+    "data-structures",
     ...(slug || []),
     "README.md",
   );
@@ -139,16 +152,16 @@ export const getStaticProps: GetStaticProps = async (context) => {
     const fileContent = await fs.readFile(path, "utf-8");
     return {
       props: {
-        algoPaths,
-        filteredAlgoPaths,
+        dataStructuresPaths,
+        filteredDataStructuresPaths,
         fileContent,
       },
     };
   } catch (err) {
     return {
       props: {
-        algoPaths,
-        filteredAlgoPaths,
+        dataStructuresPaths,
+        filteredDataStructuresPaths,
       },
     };
   }
