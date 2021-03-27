@@ -1,5 +1,6 @@
 import dirTree from "directory-tree";
 import { join } from "path";
+import fs from "fs-extra";
 
 const fileCb = (path: any, readmePaths: any[]) => {
   // README.md means it only takes English version of the file is
@@ -18,6 +19,10 @@ const mapDashStringToPascalCase = (input: string[] | string) => {
   return input.map(beautifyString);
 };
 const createSlugFromPath = (path: string) => {
+  const file = fs.readFileSync(path, { encoding: "utf-8" });
+  const lines = file.split(/\r?\n/);
+  const filteredLines = lines.filter((l) => !l.match(/^[#|_|\[|!|`|-]/i));
+  const description = filteredLines.join(" ");
   const index = path.indexOf("src");
   const short = path.slice(index);
   const splitted = short.split("/");
@@ -27,9 +32,6 @@ const createSlugFromPath = (path: string) => {
   const categories = categoryArr.length === 0 ? ["uncategorized"] : categoryArr;
   const name = slug[slug.length - 1];
   const parsedName = mapDashStringToPascalCase(name);
-  // const parsedCategories = mapDashStringToPascalCase(categories);
-  const description =
-    "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when";
 
   return {
     categories,

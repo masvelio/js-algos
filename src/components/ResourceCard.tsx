@@ -12,6 +12,7 @@ import {
 import * as React from "react";
 import styled from "@emotion/styled";
 import NextLink from "next/link";
+import ReactMarkdown from "react-markdown";
 
 const StyledHeading = styled(Link)`
   text-transform: capitalize;
@@ -64,9 +65,18 @@ function ResourceCard({ data, should }: ResourceCardProps) {
           <StyledHeading className="content">{name}</StyledHeading>
         </NextLink>
       </Heading>
-      <Text lineHeight="tall" py={2} opacity={0.8}>
-        {description}
-      </Text>
+      <Box py={2}>
+        <Text lineHeight="tall" py={0} opacity={0.8} noOfLines={5}>
+          <ReactMarkdown
+            renderers={{
+              // remove boldness
+              strong: ({ children }) => children,
+            }}
+          >
+            {description}
+          </ReactMarkdown>
+        </Text>
+      </Box>
     </Box>
   );
 }

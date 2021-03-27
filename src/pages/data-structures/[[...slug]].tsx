@@ -117,7 +117,7 @@ function Index({
 export default Index;
 
 export async function getStaticPaths() {
-  const dataStructuresReadmePaths = getPathsByMainPrefix("data-structures");
+  const dataStructuresReadmePaths = await getPathsByMainPrefix("data-structures");
   const categories = dataStructuresReadmePaths.map((el) => ({
     params: { slug: el.categories },
   }));
@@ -132,7 +132,7 @@ export async function getStaticPaths() {
 }
 
 export const getStaticProps: GetStaticProps = async (context) => {
-  const dataStructuresPaths = getPathsByMainPrefix("data-structures");
+  const dataStructuresPaths = await getPathsByMainPrefix("data-structures");
   const slug = context?.params?.slug as undefined | string[];
   const filteredDataStructuresPaths = dataStructuresPaths.filter(
     (dataStructure) =>
