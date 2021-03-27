@@ -8,8 +8,6 @@ import {
   useColorModeValue,
   Wrap,
   WrapItem,
-  LinkBox,
-  LinkOverlay,
 } from "@chakra-ui/react";
 import * as React from "react";
 import styled from "@emotion/styled";
@@ -44,50 +42,46 @@ function ResourceCard({ data, should }: ResourceCardProps) {
   const { description, categories, name, shortSlug } = data;
 
   return (
-    <LinkBox
-      maxW="360px"
-      borderWidth="1px"
-      borderRadius="lg"
-      p={4}
-      boxShadow="md"
-      _hover={{ cursor: "pointer" }}
-    >
-      <Wrap className="algolia-exclude" spacing="3" mb="2" align="center">
-        {categories?.map((category: string, index: number) => (
-          <WrapItem key={index}>
-            <Badge
-              as="a"
-              rel="tag"
-              color={useColorModeValue("#FF8008", "#FF8008")}
-              textTransform="uppercase"
-              fontSize="xs"
-              fontWeight="bold"
+    <NextLink href={`${shortSlug?.join("/")}`}>
+      <Box
+        maxW="360px"
+        borderWidth="1px"
+        borderRadius="lg"
+        p={6}
+        boxShadow="md"
+      >
+        <Heading as="h3" size="sm">
+          <StyledHeading className="content">{name}</StyledHeading>
+        </Heading>
+        <Wrap spacing="3" mt="2" align="center">
+          {categories?.map((category: string, index: number) => (
+            <WrapItem key={index}>
+              <Badge
+                as="a"
+                rel="tag"
+                color={useColorModeValue("#FF8008", "#FF8008")}
+                textTransform="uppercase"
+                fontSize="xs"
+                fontWeight="bold"
+              >
+                {category}
+              </Badge>
+            </WrapItem>
+          ))}
+        </Wrap>
+        <Box py={2}>
+          <Text lineHeight="tall" py={0} opacity={0.8} noOfLines={5}>
+            <ReactMarkdown
+              renderers={{
+                strong: ({ children }) => children,
+              }}
             >
-              {category}
-            </Badge>
-          </WrapItem>
-        ))}
-      </Wrap>
-
-      <Heading as="h3" size="sm">
-        <NextLink href={`${shortSlug?.join("/")}`}>
-          <LinkOverlay>
-            <StyledHeading className="content">{name}</StyledHeading>
-          </LinkOverlay>
-        </NextLink>
-      </Heading>
-      <Box py={2}>
-        <Text lineHeight="tall" py={0} opacity={0.8} noOfLines={5}>
-          <ReactMarkdown
-            renderers={{
-              strong: ({ children }) => children,
-            }}
-          >
-            {description}
-          </ReactMarkdown>
-        </Text>
+              {description}
+            </ReactMarkdown>
+          </Text>
+        </Box>
       </Box>
-    </LinkBox>
+    </NextLink>
   );
 }
 

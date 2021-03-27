@@ -1,7 +1,4 @@
 import * as React from "react";
-// import _ from "lodash";
-import { FaMicrophone } from "react-icons/fa";
-
 import {
   Badge,
   Box,
@@ -88,15 +85,11 @@ function Index({ algoPaths, filteredAlgoPaths, fileContent }) {
           </ReactMarkdown>
         </Main>
       ) : (
-        <>
+        <Main>
           <Stack spacing="12">
-            <ResourceSection
-              title="Talks"
-              resources={filteredAlgoPaths}
-              icon={FaMicrophone}
-            />
+            <ResourceSection resources={filteredAlgoPaths} />
           </Stack>
-        </>
+        </Main>
       )}
     </PageContainer>
   );
@@ -155,15 +148,13 @@ export const getStaticProps: GetStaticProps = async (context) => {
 };
 
 interface ResourceSectionProps {
-  title: string;
-  icon: React.ElementType;
   resources: Resource[];
 }
 
 function ResourceSection({ resources }: ResourceSectionProps) {
   return (
-    <Box as="section" mt="12">
-      <SimpleGrid mt={8} columns={[1, 2]} spacing={6}>
+    <Box as="section">
+      <SimpleGrid minChildWidth={300} columns={[1, 2]} spacing={6}>
         {resources.map((item, index) => (
           <ResourceCard key={index} data={item} should={true} />
         ))}

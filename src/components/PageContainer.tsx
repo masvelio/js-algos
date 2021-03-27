@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import * as React from "react";
 import { Badge, Box, chakra } from "@chakra-ui/react";
-import { SkipNavContent, SkipNavLink } from "@chakra-ui/skip-nav";
+import { SkipNavContent } from "@chakra-ui/skip-nav";
 import Container from "src/components/Container";
 import Footer from "src/components/Footer";
 import Header from "src/components/Header";
@@ -46,7 +46,6 @@ function PageContainer(props: PageContainerProps) {
   return (
     <>
       <SEO title={title} description={description} />
-      <SkipNavLink zIndex={20}>Skip to Content</SkipNavLink>
       <Header />
       <Container as="main" className="main-content">
         <Box display={{ base: "block", md: "flex" }}>

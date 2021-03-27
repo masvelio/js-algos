@@ -1,6 +1,4 @@
 import * as React from "react";
-// import _ from "lodash";
-import { FaMicrophone } from "react-icons/fa";
 
 import {
   Badge,
@@ -100,15 +98,11 @@ function Index({
           </ReactMarkdown>
         </Main>
       ) : (
-        <>
+        <Main>
           <Stack spacing="12">
-            <ResourceSection
-              title="Talks"
-              resources={filteredDataStructuresPaths}
-              icon={FaMicrophone}
-            />
+            <ResourceSection resources={filteredDataStructuresPaths} />
           </Stack>
-        </>
+        </Main>
       )}
     </PageContainer>
   );
@@ -117,7 +111,9 @@ function Index({
 export default Index;
 
 export async function getStaticPaths() {
-  const dataStructuresReadmePaths = await getPathsByMainPrefix("data-structures");
+  const dataStructuresReadmePaths = await getPathsByMainPrefix(
+    "data-structures",
+  );
   const categories = dataStructuresReadmePaths.map((el) => ({
     params: { slug: el.categories },
   }));
@@ -168,15 +164,13 @@ export const getStaticProps: GetStaticProps = async (context) => {
 };
 
 interface ResourceSectionProps {
-  title: string;
-  icon: React.ElementType;
   resources: Resource[];
 }
 
 function ResourceSection({ resources }: ResourceSectionProps) {
   return (
-    <Box as="section" mt="12">
-      <SimpleGrid mt={8} columns={[1, 2]} spacing={6}>
+    <Box as="section">
+      <SimpleGrid minChildWidth={300} columns={[1, 2]} spacing={6}>
         {resources.map((item, index) => (
           <ResourceCard key={index} data={item} should={true} />
         ))}
