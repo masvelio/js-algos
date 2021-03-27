@@ -1,15 +1,14 @@
-import React from "react"
-import { Box, BoxProps, Icon } from "@chakra-ui/react"
-import { FaHeart } from "react-icons/fa"
-import siteConfig from "src/site-config"
+import React from "react";
+import { Box, BoxProps, Icon } from "@chakra-ui/react";
+import { FaHamburger } from "react-icons/fa";
 
 const SponsorButton = (props: BoxProps) => (
   <Box
     display={{ base: "none", md: "flex" }}
     alignItems="center"
     as="a"
-    aria-label="Sponsor Chakra UI on Open Collective"
-    href={siteConfig.openCollective.url}
+    aria-label="Sponsor Masvelio for his work"
+    href="https://buymeacoffee.com/masvelio"
     target="_blank"
     rel="noopener noreferrer"
     bg="gray.50"
@@ -34,11 +33,11 @@ const SponsorButton = (props: BoxProps) => (
     }}
     {...props}
   >
-    <Icon as={FaHeart} w="4" h="4" color="red.500" mr="2" />
+    <Icon as={FaHamburger} w="4" h="4" color="#FF8008" mr="2" />
     <Box as="strong" lineHeight="inherit" fontWeight="semibold">
-      Sponsor
+      Burger it!
     </Box>
   </Box>
-)
+);
 
-export default SponsorButton
+export default SponsorButton;

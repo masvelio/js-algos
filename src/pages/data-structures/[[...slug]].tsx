@@ -176,7 +176,7 @@ interface ResourceSectionProps {
 function ResourceSection({ resources }: ResourceSectionProps) {
   return (
     <Box as="section" mt="12">
-      <SimpleGrid mt={8} columns={[1, 2]} spacing={8}>
+      <SimpleGrid mt={8} columns={[1, 2]} spacing={6}>
         {resources.map((item, index) => (
           <ResourceCard key={index} data={item} should={true} />
         ))}

@@ -1,6 +1,5 @@
 import { Box, Button, chakra, Stack, Text } from "@chakra-ui/react";
 import * as React from "react";
-import { DiGithubBadge } from "react-icons/di";
 import { FaArrowRight } from "react-icons/fa";
 import NextLink from "next/link";
 
@@ -78,18 +77,6 @@ const HomePage = () => {
                     Get Started
                   </Button>
                 </NextLink>
-                <Button
-                  as="a"
-                  size="lg"
-                  h="4rem"
-                  px="40px"
-                  fontSize="1.2rem"
-                  href="https://github.com/chakra-ui/chakra-ui/"
-                  target="__blank"
-                  leftIcon={<DiGithubBadge size="1.5em" />}
-                >
-                  GitHub
-                </Button>
               </Stack>
             </Box>
           </Container>

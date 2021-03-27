@@ -19,5 +19,5 @@
 // }
 
 export function convertBackticksToInlineCode() {
-  console.log("convertBackticksToInlineCode");
+  return "";
 }

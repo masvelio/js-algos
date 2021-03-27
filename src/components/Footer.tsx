@@ -20,22 +20,22 @@ const links = [
   {
     icon: DiGithubBadge,
     label: "GitHub",
-    href: "https://github.com/segunadebayo",
+    href: "https://github.com/masvelio/js-algos",
   },
   {
     icon: IoLogoTwitter,
     label: "Twitter",
-    href: "https://twitter.com/thesegunadebayo",
+    href: "https://twitter.com/maslankam92",
   },
   {
     icon: IoLogoLinkedin,
     label: "LinkedIn",
-    href: "https://linkedin.com/in/thesegunadebayo/",
+    href: "https://www.linkedin.com/in/maslankamarcin/",
   },
   {
     icon: MdEmail,
     label: "Email",
-    href: "mailto:sage@adebayosegun.com",
+    href: "mailto:me@masvel.io",
   },
 ];
 
