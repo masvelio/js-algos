@@ -14,13 +14,7 @@ import {
 } from "@chakra-ui/react";
 // import { convertBackticksToInlineCode } from "utils/convert-backticks-to-inline-code";
 import SidebarLink from "./SidebarLink";
-import {
-  BiNetworkChart,
-  BiLayer,
-  BiBookOpen,
-  BiVideoRecording,
-  BiGlasses,
-} from "react-icons/bi";
+import { BiNetworkChart, BiLayer, BiBookOpen, BiGlasses } from "react-icons/bi";
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
 // @ts-ignore
@@ -102,11 +96,6 @@ const mainNavLinks = [
     icon: <BiBookOpen color="white" size={18} />,
     href: "/articles",
     label: "Articles",
-  },
-  {
-    icon: <BiVideoRecording color="white" size={18} />,
-    href: "/videos",
-    label: "Videos",
   },
   {
     icon: <BiGlasses color="white" size={18} />,

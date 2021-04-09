@@ -1,45 +1,101 @@
 import * as React from "react";
 
-import { Text } from "@chakra-ui/react";
-import PageContainer from "src/components/PageContainer";
-import Sidebar from "src/components/sidebar/Sidebar";
-import resourcesSidebar from "src/guides-sidebar.json";
+import PageContainer from "../components/PageContainer";
+import Sidebar from "../components/sidebar/Sidebar";
+import { Main } from "../components/Main";
+import {
+  Box,
+  Heading,
+  Text,
+  Stack,
+  SimpleGrid,
+  LinkBox,
+  LinkOverlay,
+} from "@chakra-ui/react";
 
-export function getRoutes(slug: string) {
-  const configMap = {
-    "/resources": resourcesSidebar,
-  };
-
-  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-  // @ts-ignore
-  const [_, sidebar] =
-    Object.entries(configMap).find(([path, _sidebar]) =>
-      slug.startsWith(path),
-    ) ?? [];
-
-  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-  // @ts-ignore
-  return sidebar?.routes ?? [];
-}
-
+const resources = [
+  {
+    title: "A Guide to JavaScript Algorithms",
+    description:
+      "A Quick Guide to Writing JavaScript Graph and Tree Traversal Algorithms",
+    url:
+      "https://blog.bitsrc.io/a-guide-to-javascript-algorithms-search-4d653be3dca2",
+  },
+  {
+    title: "8 Tips to help you better optimize your JavaScript algorithms.",
+    description:
+      "Logic accounts as the most significant factor affecting the speed and performance of any given algorithm. ",
+    url:
+      "https://levelup.gitconnected.com/8-tips-to-help-you-better-optimize-your-javascript-algorithms-c226871193fc",
+  },
+  {
+    title: "5 JavaScript Algorithms You Should Know How To Solve",
+    description: "5 Beginner JavaScript Algorithms With Examples",
+    url:
+      "https://levelup.gitconnected.com/8-tips-to-help-you-better-optimize-your-javascript-algorithms-c226871193fc",
+  },
+  {
+    title: "Algorithms in JavaScript",
+    description: "40 Problems, Solutions, and Explanations",
+    url:
+      "https://levelup.gitconnected.com/8-tips-to-help-you-better-optimize-your-javascript-algorithms-c226871193fc",
+  },
+  {
+    title: "Here Are the Most Common JavaScript Algorithms and Data Structures",
+    description:
+      "Level up your JavaScript with these algorithms and data structures\n",
+    url:
+      "https://betterprogramming.pub/here-are-the-most-common-javascript-algorithms-and-data-structures-ec3729050169",
+  },
+];
 function Articles() {
-  /**
-   * Re-use the docs sidebar so it's easier for a visitors
-   * to reference components mentioned in the resource blog/video.
-   */
-  const routes = getRoutes("/resources");
-
   return (
     <PageContainer
-      sidebar={<Sidebar routes={routes} />}
+      sidebar={<Sidebar routes={[]} />}
       frontmatter={{
         title: "Community Resources",
         description:
           "A rich compilation of technical descriptions and detailed information of how Chakra UI works.",
       }}
     >
-      <Text mt="2">Articles</Text>
-      <Text mt="2">Coming soon</Text>
+      <Main>
+        <Stack spacing="12">
+          <Heading size="lg">Articles</Heading>
+          <Box as="section">
+            <SimpleGrid minChildWidth={[200, 300]} columns={[1, 2]} spacing={6}>
+              {resources.map((item) => (
+                <LinkBox key={item.url}>
+                  <Box
+                    maxW={["full", "full", "360px"]}
+                    borderWidth="1px"
+                    borderRadius="lg"
+                    p={6}
+                    boxShadow="md"
+                    h={170}
+                  >
+                    <Heading as="h3" size="sm" noOfLines={2} minH="40px">
+                      {item.title}
+                    </Heading>
+                    <Box py={2}>
+                      <Text
+                        lineHeight="tall"
+                        py={0}
+                        opacity={0.8}
+                        noOfLines={3}
+                      >
+                        <LinkOverlay href={item.url} isExternal>
+                          {item.description}
+                        </LinkOverlay>
+                      </Text>
+                    </Box>
+                  </Box>
+                </LinkBox>
+              ))}
+            </SimpleGrid>
+          </Box>
+          s{" "}
+        </Stack>
+      </Main>
     </PageContainer>
   );
 }

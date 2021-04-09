@@ -6,6 +6,7 @@ import {
   Box,
   Breadcrumb,
   BreadcrumbItem,
+  Heading,
   SimpleGrid,
   Stack,
 } from "@chakra-ui/react";
@@ -15,12 +16,29 @@ import * as React from "react";
 import ResourceCard, { Resource } from "./ResourceCard";
 import reactMarkdownRenderer from "src/utils/reactMarkdownRenderer";
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-// @ts-ignore
-const PageLayout = ({ sidebarRoutes, fileContent, resourcesPaths, slug }) => {
+const PageLayout = ({
+  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+  // @ts-ignore
+  sidebarRoutes,
+  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+  // @ts-ignore
+  fileContent,
+  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+  // @ts-ignore
+  resourcesPaths,
+  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+  // @ts-ignore
+  slug,
+  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+  // @ts-ignore
+  prefix,
+  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+  // @ts-ignore
+  title,
+}) => {
   return (
     <PageContainer
-      sidebar={<Sidebar routes={sidebarRoutes} prefix="data-structures" />}
+      sidebar={<Sidebar routes={sidebarRoutes} prefix={prefix} />}
       frontmatter={{
         title: "Community Resources",
         description:
@@ -36,13 +54,18 @@ const PageLayout = ({ sidebarRoutes, fileContent, resourcesPaths, slug }) => {
               </BreadcrumbItem>
             ))}
           </Breadcrumb>
-          <ReactMarkdown allowDangerousHtml renderers={reactMarkdownRenderer} plugins={[gfm]}>
+          <ReactMarkdown
+            allowDangerousHtml
+            renderers={reactMarkdownRenderer}
+            plugins={[gfm]}
+          >
             {fileContent}
           </ReactMarkdown>
         </Main>
       ) : (
         <Main>
           <Stack spacing="12">
+            <Heading size="lg">{title}</Heading>
             <ResourceSection resources={resourcesPaths} />
           </Stack>
         </Main>

@@ -138,9 +138,6 @@ export function MobileNavContent(props: MobileNavContentProps) {
                       <NavLink href="/articles">Articles</NavLink>
                     </WrapItem>
                     <WrapItem>
-                      <NavLink href="/videos">Videos</NavLink>
-                    </WrapItem>
-                    <WrapItem>
                       <NavLink href="/courses">Courses</NavLink>
                     </WrapItem>
                   </Wrap>

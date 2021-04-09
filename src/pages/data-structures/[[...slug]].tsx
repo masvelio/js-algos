@@ -30,6 +30,8 @@ function Index({
       resourcesPaths={filteredDataStructuresPaths}
       sidebarRoutes={dataStructuresPaths}
       slug={slug}
+      prefix="data-structures"
+      title="Data Structures"
     />
   );
 }

@@ -19,6 +19,8 @@ function Index({ algoPaths, filteredAlgoPaths, fileContent }) {
       resourcesPaths={filteredAlgoPaths}
       sidebarRoutes={algoPaths}
       slug={slug}
+      prefix="algorithms"
+      title="Algorithms"
     />
   );
 }
