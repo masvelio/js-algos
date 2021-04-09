@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Icon, Text, Stack, Link } from "@chakra-ui/react";
+import { Box, Icon, Stack, Link } from "@chakra-ui/react";
 import { IoLogoTwitter, IoLogoLinkedin } from "react-icons/io";
 import { MdEmail } from "react-icons/md";
 import { DiGithubBadge } from "react-icons/di";
@@ -41,9 +41,6 @@ const links = [
 
 export const Footer = () => (
   <Box as="footer" mt={12} textAlign="center">
-    <Text fontSize="sm">
-      <span>Proudly made in 🇵🇱</span>
-    </Text>
     <Stack mt={4} direction="row" spacing="12px" justify="center">
       {links.map((link) => (
         <FooterLink key={link.href} {...link} />

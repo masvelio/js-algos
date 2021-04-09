@@ -11,35 +11,11 @@ import {
   SimpleGrid,
   LinkBox,
   LinkOverlay,
+  Badge,
+  useColorModeValue,
 } from "@chakra-ui/react";
 
 const resources = [
-  {
-    title: "A Practical Guide to Algorithms with JavaScript",
-    description:
-      "Bored by the academic approach of most data structures and algorithms courses? This is for you! You'll learn to solve algorithms and analyze space and time complexity in both an interview setting and in your day-to-day development. ",
-    url: "https://frontendmasters.com/courses/practical-algorithms/",
-  },
-  {
-    title: "Data Structures and Algorithms in JavaScript",
-    description:
-      "This course teaches you how to implement your first data structures and algorithms. In the process, you’ll learn some fundamental computer science concepts as well.",
-    url:
-      "https://egghead.io/courses/data-structures-and-algorithms-in-javascript",
-  },
-  {
-    title: "JavaScript Algorithms and Data Structures",
-    description:
-      "While HTML and CSS control the content and styling of a page, JavaScript is used to make it interactive. In the JavaScript Algorithm and Data Structures Certification, you'll learn the fundamentals of JavaScript including variables, arrays, objects, loops, and functions.",
-    url:
-      "https://www.freecodecamp.org/learn/javascript-algorithms-and-data-structures/",
-  },
-  {
-    title: "JavaScript Algorithms - The Fundamentals",
-    description:
-      "Learn all the core basics and fundamentals about JavaScript algorithms, dive into tons of examples and get a plan for building and measuring algorithms.",
-    url: "https://pro.academind.com/p/javascript-algorithms-the-fundamentals",
-  },
   {
     title:
       "Data Structures and Algorithms in JavaScript - Full Course for Beginners",
@@ -47,13 +23,53 @@ const resources = [
       "Learn common data structures and algorithms in this tutorial course. You will learn the theory behind them, as well as how to program them in JavaScript.",
     url:
       "https://www.youtube.com/watch?v=t2CEgPsws3U&ab_channel=freeCodeCamp.org",
+    company: "freeCodeCamp",
+    cost: "free",
   },
+  {
+    title: "JavaScript Algorithms and Data Structures",
+    description:
+      "While HTML and CSS control the content and styling of a page, JavaScript is used to make it interactive. In the JavaScript Algorithm and Data Structures Certification, you'll learn the fundamentals of JavaScript including variables, arrays, objects, loops, and functions.",
+    url:
+      "https://www.freecodecamp.org/learn/javascript-algorithms-and-data-structures/",
+    company: "freeCodeCamp",
+    cost: "free",
+  },
+  {
+    title: "A Practical Guide to Algorithms with JavaScript",
+    description:
+      "Bored by the academic approach of most data structures and algorithms courses? This is for you! You'll learn to solve algorithms and analyze space and time complexity in both an interview setting and in your day-to-day development. ",
+    url: "https://frontendmasters.com/courses/practical-algorithms/",
+    company: "frontend masters",
+    cost: "paid",
+  },
+  {
+    title: "Data Structures and Algorithms in JavaScript",
+    description:
+      "This course teaches you how to implement your first data structures and algorithms. In the process, you’ll learn some fundamental computer science concepts as well.",
+    url:
+      "https://egghead.io/courses/data-structures-and-algorithms-in-javascript",
+    company: "egghead.io",
+    cost: "paid",
+  },
+
+  {
+    title: "JavaScript Algorithms - The Fundamentals",
+    description:
+      "Learn all the core basics and fundamentals about JavaScript algorithms, dive into tons of examples and get a plan for building and measuring algorithms.",
+    url: "https://pro.academind.com/p/javascript-algorithms-the-fundamentals",
+    company: "Academind",
+    cost: "paid",
+  },
+
   {
     title: "The Ultimate Guide to JavaScript Algorithms Courses",
     description:
       "Over the years, JavaScript has grown tremendously from the fancy client-side language capable of enhancing web pages through stunning interactivity into a reliable language generally adopted for development across multiple platforms.",
     url:
       "https://scotch.io/courses/the-ultimate-guide-to-javascript-algorithms",
+    company: "scotch.io",
+    cost: "paid",
   },
 ];
 function Courses() {
@@ -79,8 +95,23 @@ function Courses() {
                     borderRadius="lg"
                     p={6}
                     boxShadow="md"
-                    h={170}
+                    h={200}
                   >
+                    {[item.cost, item.company].map((el) => (
+                      <Badge
+                        key={item.title}
+                        mr={2}
+                        mb={2}
+                        as="a"
+                        rel="tag"
+                        color={useColorModeValue("#FF8008", "#FF8008")}
+                        textTransform="uppercase"
+                        fontSize="xs"
+                        fontWeight="bold"
+                      >
+                        {el}
+                      </Badge>
+                    ))}
                     <Heading as="h3" size="sm" noOfLines={2} minH="40px">
                       {item.title}
                     </Heading>

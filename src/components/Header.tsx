@@ -10,7 +10,7 @@ import {
 import { useViewportScroll } from "framer-motion";
 import NextLink from "next/link";
 import React from "react";
-import { FaMoon, FaSun } from "react-icons/fa";
+import { FaMoon, FaSun, FaQuestion } from "react-icons/fa";
 
 import Logo from "./Logo";
 import { MobileNavButton, MobileNavContent } from "./MobileNav";
@@ -60,6 +60,18 @@ const HeaderContent = () => {
             onClick={toggleMode}
             icon={<SwitchIcon />}
           />
+
+          <NextLink href="/about" passHref>
+            <IconButton
+              size="md"
+              fontSize="lg"
+              aria-label={"About page"}
+              variant="ghost"
+              color="current"
+              ml={{ base: "0", md: "3" }}
+              icon={<FaQuestion />}
+            />
+          </NextLink>
           <SponsorButton ml="5" />
           <MobileNavButton
             ref={mobileNavBtnRef}

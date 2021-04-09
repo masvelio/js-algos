@@ -50,10 +50,7 @@ function ResourceCard({ data, should }: ResourceCardProps) {
         p={6}
         boxShadow="md"
       >
-        <Heading as="h3" size="sm">
-          <StyledHeading className="content">{name}</StyledHeading>
-        </Heading>
-        <Wrap spacing="3" mt="2" align="center">
+        <Wrap spacing="3" mb="2" align="center">
           {categories?.map((category: string, index: number) => (
             <WrapItem key={index}>
               <Badge
@@ -69,6 +66,10 @@ function ResourceCard({ data, should }: ResourceCardProps) {
             </WrapItem>
           ))}
         </Wrap>
+        <Heading as="h3" size="sm">
+          <StyledHeading className="content">{name}</StyledHeading>
+        </Heading>
+
         <Box py={2}>
           <Text lineHeight="tall" py={0} opacity={0.8} noOfLines={5}>
             <ReactMarkdown
