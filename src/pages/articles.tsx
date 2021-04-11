@@ -51,12 +51,37 @@ const resources = [
   {
     title: "Here Are the Most Common JavaScript Algorithms and Data Structures",
     description:
-      "Level up your JavaScript with these algorithms and data structures\n",
+      "Level up your JavaScript with these algorithms and data structures",
     url:
       "https://betterprogramming.pub/here-are-the-most-common-javascript-algorithms-and-data-structures-ec3729050169",
     author: "Trevor Lasn",
   },
+  {
+    title: "6 JavaScript data structures you must know",
+    description:
+      "When solving coding problems, efficiency is paramount – from the number of coding hours to runtime, to the amount of memory devoted to a solution.",
+    url: "https://www.educative.io/blog/javascript-data-structures",
+    author: "Amanda Fawcett",
+  },
+  {
+    title: "Data Structures in JavaScript",
+    description:
+      "As business logic moves from the back to the front more and more, expertise in Frontend Engineering becomes ever more crucial. As Frontend Engineers, we depend on view libraries like React to be productive.",
+    url:
+      "https://medium.com/siliconwat/data-structures-in-javascript-1b9aed0ea17c",
+    author: "Thon Ly",
+  },
+  {
+    title: "Add your article!",
+    description:
+      "Are you an author or maybe you know good resource? Add this article to the list clicking here!",
+    // todo change url
+    url:
+      "https://medium.com/siliconwat/data-structures-in-javascript-1b9aed0ea17c",
+    additional: true,
+  },
 ];
+
 function Articles() {
   return (
     <PageContainer
@@ -73,7 +98,10 @@ function Articles() {
           <Box as="section">
             <SimpleGrid minChildWidth={[200, 300]} columns={[1, 2]} spacing={6}>
               {resources.map((item) => (
-                <LinkBox key={item.url}>
+                <LinkBox
+                  key={item.url}
+                  style={{ opacity: item.additional ? "0.5" : 1 }}
+                >
                   <Box
                     maxW={["full", "full", "360px"]}
                     borderWidth="1px"
@@ -117,7 +145,6 @@ function Articles() {
               ))}
             </SimpleGrid>
           </Box>
-          s{" "}
         </Stack>
       </Main>
     </PageContainer>

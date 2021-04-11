@@ -71,6 +71,15 @@ const resources = [
     company: "scotch.io",
     cost: "paid",
   },
+  {
+    title: "Add your course!",
+    description:
+      "Are you an author or maybe you know good resource? Add this course to the list clicking here!",
+    // todo change url
+    url:
+      "https://medium.com/siliconwat/data-structures-in-javascript-1b9aed0ea17c",
+    additional: true,
+  },
 ];
 function Courses() {
   return (
@@ -88,7 +97,10 @@ function Courses() {
           <Box as="section">
             <SimpleGrid minChildWidth={[200, 300]} columns={[1, 2]} spacing={6}>
               {resources.map((item) => (
-                <LinkBox key={item.url}>
+                <LinkBox
+                  key={item.url}
+                  style={{ opacity: item.additional ? "0.5" : 1 }}
+                >
                   <Box
                     maxW={["full", "full", "360px"]}
                     borderWidth="1px"

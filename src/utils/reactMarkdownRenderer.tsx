@@ -6,6 +6,10 @@ const StyledCode = styled(Code)`
   white-space: pre-wrap;
 `;
 
+const getURL = (filename: string) => {
+  return `https://github.com/search?l=&q=filename%3A${filename}+repo%3Atrekhleb%2Fjavascript-algorithms&type=code`;
+};
+
 const reactMarkdownRenderer = {
   heading: (props: { level: number; children: {} | null | undefined }) => {
     if (props.level === 1) {
@@ -20,19 +24,24 @@ const reactMarkdownRenderer = {
   link: (props: {
     href: string | undefined;
     node: { children: { value: React.ReactNode }[] };
-  }) => (
-    <Link
-      href={props.href}
-      isExternal
-      style={{
-        textDecoration: "underline",
-        textDecorationColor: "orange",
-      }}
-      _hover={{ color: "orange" }}
-    >
-      {props.node.children[0].value}
-    </Link>
-  ),
+  }) => {
+    if (props?.href?.includes(".md")) {
+      return "";
+    }
+    return (
+      <Link
+        href={props?.href?.includes(".js") ? getURL(props.href) : props.href}
+        isExternal
+        style={{
+          textDecoration: "underline",
+          textDecorationColor: "orange",
+        }}
+        _hover={{ color: "orange" }}
+      >
+        {props.node.children[0].value}
+      </Link>
+    );
+  },
   code: ({ value }: { value: string }) => <StyledCode>{value}</StyledCode>,
   inlineCode: ({ value }: { value: string }) => <Code>{value}</Code>,
   list: (props: { children: React.ReactNode }) => {
@@ -48,6 +57,15 @@ const reactMarkdownRenderer = {
         {props.children}
       </blockquote>
     );
+  },
+  emphasis: (props: {
+    node: { children: { value: string }[] };
+    children: any;
+  }) => {
+    if (props.node.children[0].value === "Read this in other languages:") {
+      return "";
+    }
+    return props.children;
   },
 };
 
