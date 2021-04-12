@@ -48,14 +48,18 @@ const PageLayout = ({
       {fileContent ? (
         <Main>
           <Breadcrumb separator="👉">
-            {slug.map((el: string) => (
-              <BreadcrumbItem key={el}>
-                <Badge>{el}</Badge>
-              </BreadcrumbItem>
-            ))}
+            {slug
+              .map((el: string) => (
+                <BreadcrumbItem key={el}>
+                  <Badge>{el}</Badge>
+                </BreadcrumbItem>
+              ))
+              .splice(0, slug.length - 1)}
           </Breadcrumb>
           <ReactMarkdown
             allowDangerousHtml
+            // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+            // @ts-ignore
             renderers={reactMarkdownRenderer}
             plugins={[gfm]}
           >
