@@ -7,7 +7,6 @@ import {
   Box,
   Heading,
   Text,
-  Stack,
   SimpleGrid,
   LinkBox,
   LinkOverlay,
@@ -93,59 +92,52 @@ function Articles() {
       }}
     >
       <Main>
-        <Stack spacing="12">
-          <Heading size="lg">Articles</Heading>
-          <Box as="section">
-            <SimpleGrid minChildWidth={[200, 300]} columns={[1, 2]} spacing={6}>
-              {resources.map((item) => (
-                <LinkBox
-                  key={item.url}
-                  style={{ opacity: item.additional ? "0.5" : 1 }}
+        <Heading size="lg">Articles</Heading>
+        <Box as="section">
+          <SimpleGrid minChildWidth={[200, 300]} columns={[1, 2]} spacing={6}>
+            {resources.map((item) => (
+              <LinkBox
+                key={item.url}
+                style={{ opacity: item.additional ? "0.5" : 1 }}
+              >
+                <Box
+                  maxW={["full", "full", "360px"]}
+                  borderWidth="1px"
+                  borderRadius="lg"
+                  p={6}
+                  boxShadow="md"
+                  h={200}
                 >
-                  <Box
-                    maxW={["full", "full", "360px"]}
-                    borderWidth="1px"
-                    borderRadius="lg"
-                    p={6}
-                    boxShadow="md"
-                    h={200}
-                  >
-                    <Wrap spacing="3" mb="2" align="center">
-                      <WrapItem>
-                        <Badge
-                          as="a"
-                          rel="tag"
-                          color={useColorModeValue("#FF8008", "#FF8008")}
-                          textTransform="uppercase"
-                          fontSize="xs"
-                          fontWeight="bold"
-                        >
-                          {item.author}
-                        </Badge>
-                      </WrapItem>
-                    </Wrap>
-                    <Heading as="h3" size="sm" noOfLines={2} minH="40px">
-                      {item.title}
-                    </Heading>
-
-                    <Box py={2}>
-                      <Text
-                        lineHeight="tall"
-                        py={0}
-                        opacity={0.8}
-                        noOfLines={3}
+                  <Wrap spacing="3" mb="2" align="center">
+                    <WrapItem>
+                      <Badge
+                        as="a"
+                        rel="tag"
+                        color={useColorModeValue("#FF8008", "#FF8008")}
+                        textTransform="uppercase"
+                        fontSize="xs"
+                        fontWeight="bold"
                       >
-                        <LinkOverlay href={item.url} isExternal>
-                          {item.description}
-                        </LinkOverlay>
-                      </Text>
-                    </Box>
+                        {item.author}
+                      </Badge>
+                    </WrapItem>
+                  </Wrap>
+                  <Heading as="h3" size="sm" noOfLines={2} minH="40px">
+                    {item.title}
+                  </Heading>
+
+                  <Box py={2}>
+                    <Text lineHeight="tall" py={0} opacity={0.8} noOfLines={3}>
+                      <LinkOverlay href={item.url} isExternal>
+                        {item.description}
+                      </LinkOverlay>
+                    </Text>
                   </Box>
-                </LinkBox>
-              ))}
-            </SimpleGrid>
-          </Box>
-        </Stack>
+                </Box>
+              </LinkBox>
+            ))}
+          </SimpleGrid>
+        </Box>
       </Main>
     </PageContainer>
   );

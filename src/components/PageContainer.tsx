@@ -1,12 +1,11 @@
 import { useRouter } from "next/router";
 import * as React from "react";
-import { Badge, Box, chakra } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 import { SkipNavContent } from "@chakra-ui/skip-nav";
 import Container from "src/components/Container";
 import Footer from "src/components/Footer";
 import Header from "src/components/Header";
 import SEO from "src/components/SEO";
-import { convertBackticksToInlineCode } from "src/utils/convert-backticks-to-inline-code";
 import PageTransition from "src/components/PageTransition";
 
 function useHeadingFocusOnRouteChange() {
@@ -41,13 +40,13 @@ function PageContainer(props: PageContainerProps) {
   const { frontmatter, children, sidebar, pagination } = props;
   useHeadingFocusOnRouteChange();
 
-  const { title, description, version } = frontmatter;
+  const { title, description } = frontmatter;
 
   return (
     <>
       <SEO title={title} description={description} />
       <Header />
-      <Container as="main" className="main-content">
+      <Container as="main">
         <Box display={{ base: "block", md: "flex" }}>
           {sidebar || null}
           <div style={{ flex: 1 }}>
@@ -55,24 +54,13 @@ function PageContainer(props: PageContainerProps) {
             <Box
               id="content"
               pt={3}
-              px={5}
+              px={[0, 5]}
               mt="4.5rem"
               mx="auto"
               maxW="48rem"
               minH="76vh"
             >
-              <PageTransition>
-                <chakra.h1 tabIndex={-1} outline={0} apply="mdx.h1">
-                  {/*// @ts-ignore*/}
-                  {convertBackticksToInlineCode(title)}
-                </chakra.h1>
-                {version && (
-                  <Badge colorScheme="teal" letterSpacing="wider">
-                    v{version}
-                  </Badge>
-                )}
-                {children}
-              </PageTransition>
+              <PageTransition>{children}</PageTransition>
               {pagination || null}
             </Box>
             <Footer />

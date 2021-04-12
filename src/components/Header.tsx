@@ -112,8 +112,6 @@ const Header = (props) => {
       borderTop="6px solid"
       borderTopColor="#FF8008"
       width="full"
-      opacity={0.9}
-      style={{ backdropFilter: "blur(3px)" }}
       {...props}
     >
       <chakra.div height="4.5rem" mx="auto" maxW="1200px">

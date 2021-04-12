@@ -7,7 +7,6 @@ import {
   Box,
   Heading,
   Text,
-  Stack,
   SimpleGrid,
   LinkBox,
   LinkOverlay,
@@ -92,60 +91,52 @@ function Courses() {
       }}
     >
       <Main>
-        <Stack spacing="12">
-          <Heading size="lg">Courses</Heading>
-          <Box as="section">
-            <SimpleGrid minChildWidth={[200, 300]} columns={[1, 2]} spacing={6}>
-              {resources.map((item) => (
-                <LinkBox
-                  key={item.url}
-                  style={{ opacity: item.additional ? "0.5" : 1 }}
+        <Heading size="lg">Courses</Heading>
+        <Box as="section">
+          <SimpleGrid minChildWidth={[200, 300]} columns={[1, 2]} spacing={6}>
+            {resources.map((item) => (
+              <LinkBox
+                key={item.url}
+                style={{ opacity: item.additional ? "0.5" : 1 }}
+              >
+                <Box
+                  maxW={["full", "full", "360px"]}
+                  borderWidth="1px"
+                  borderRadius="lg"
+                  p={6}
+                  boxShadow="md"
+                  h={200}
                 >
-                  <Box
-                    maxW={["full", "full", "360px"]}
-                    borderWidth="1px"
-                    borderRadius="lg"
-                    p={6}
-                    boxShadow="md"
-                    h={200}
-                  >
-                    {[item.cost, item.company].map((el) => (
-                      <Badge
-                        key={item.title}
-                        mr={2}
-                        mb={2}
-                        as="a"
-                        rel="tag"
-                        color={useColorModeValue("#FF8008", "#FF8008")}
-                        textTransform="uppercase"
-                        fontSize="xs"
-                        fontWeight="bold"
-                      >
-                        {el}
-                      </Badge>
-                    ))}
-                    <Heading as="h3" size="sm" noOfLines={2} minH="40px">
-                      {item.title}
-                    </Heading>
-                    <Box py={2}>
-                      <Text
-                        lineHeight="tall"
-                        py={0}
-                        opacity={0.8}
-                        noOfLines={3}
-                      >
-                        <LinkOverlay href={item.url} isExternal>
-                          {item.description}
-                        </LinkOverlay>
-                      </Text>
-                    </Box>
+                  {[item.cost, item.company].map((el) => (
+                    <Badge
+                      key={item.title}
+                      mr={2}
+                      mb={2}
+                      as="a"
+                      rel="tag"
+                      color={useColorModeValue("#FF8008", "#FF8008")}
+                      textTransform="uppercase"
+                      fontSize="xs"
+                      fontWeight="bold"
+                    >
+                      {el}
+                    </Badge>
+                  ))}
+                  <Heading as="h3" size="sm" noOfLines={2} minH="40px">
+                    {item.title}
+                  </Heading>
+                  <Box py={2}>
+                    <Text lineHeight="tall" py={0} opacity={0.8} noOfLines={3}>
+                      <LinkOverlay href={item.url} isExternal>
+                        {item.description}
+                      </LinkOverlay>
+                    </Text>
                   </Box>
-                </LinkBox>
-              ))}
-            </SimpleGrid>
-          </Box>
-          s{" "}
-        </Stack>
+                </Box>
+              </LinkBox>
+            ))}
+          </SimpleGrid>
+        </Box>
       </Main>
     </PageContainer>
   );

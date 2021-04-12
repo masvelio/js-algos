@@ -150,7 +150,6 @@ const Sidebar = ({ routes, prefix = "" }) => {
         routes={routes}
         pathname={pathname}
         asPath={asPath}
-        contentRef={ref}
         prefix={prefix}
       />
     </Box>

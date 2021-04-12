@@ -8,7 +8,6 @@ import {
   BreadcrumbItem,
   Heading,
   SimpleGrid,
-  Stack,
 } from "@chakra-ui/react";
 import ReactMarkdown from "react-markdown";
 import gfm from "remark-gfm";
@@ -68,10 +67,8 @@ const PageLayout = ({
         </Main>
       ) : (
         <Main>
-          <Stack spacing="12">
-            <Heading size="lg">{title}</Heading>
-            <ResourceSection resources={resourcesPaths} />
-          </Stack>
+          <Heading size="lg">{title}</Heading>
+          <ResourceSection resources={resourcesPaths} />
         </Main>
       )}
     </PageContainer>

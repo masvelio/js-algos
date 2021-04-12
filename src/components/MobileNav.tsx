@@ -1,19 +1,17 @@
 import {
   Box,
-  BoxProps,
   Center,
   CloseButton,
   Flex,
   HStack,
+  VStack,
   IconButton,
   IconButtonProps,
   useBreakpointValue,
   useColorModeValue,
   useUpdateEffect,
-  Wrap,
-  WrapItem,
 } from "@chakra-ui/react";
-import { AnimatePresence, motion, useElementScroll } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import useRouteChanged from "src/hooks/use-route-changed";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
@@ -21,9 +19,7 @@ import * as React from "react";
 import { AiOutlineMenu } from "react-icons/ai";
 import { RemoveScroll } from "react-remove-scroll";
 import Logo from "./Logo";
-import { SidebarContent } from "./sidebar/Sidebar";
 import SponsorButton from "./SponsorButton";
-import resourcesSidebar from "src/guides-sidebar.json";
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
 // @ts-ignore
@@ -66,7 +62,7 @@ interface MobileNavContentProps {
 export function MobileNavContent(props: MobileNavContentProps) {
   const { isOpen, onClose } = props;
   const closeBtnRef = React.useRef<HTMLButtonElement>();
-  const { pathname, asPath } = useRouter();
+  // const { pathname, asPath } = useRouter();
 
   useRouteChanged(onClose);
 
@@ -91,8 +87,6 @@ export function MobileNavContent(props: MobileNavContentProps) {
       });
     }
   }, [isOpen]);
-
-  const [shadow, setShadow] = React.useState<string>();
 
   return (
     <AnimatePresence>
@@ -119,42 +113,19 @@ export function MobileNavContent(props: MobileNavContentProps) {
               <Box>
                 <Flex justify="space-between" px="6" pt="5" pb="4">
                   <Logo />
-                  {/*<img alt="cojest?" src={"/logo.svg"} />*/}
                   <HStack spacing="5">
                     <SponsorButton display="flex" />
                     {/*// @ts-ignore*/}
                     <CloseButton ref={closeBtnRef} onClick={onClose} />
                   </HStack>
                 </Flex>
-                <Box px="6" pb="6" pt="2" shadow={shadow}>
-                  <Wrap spacing="5" justify="center">
-                    <WrapItem>
-                      <NavLink href="/algorithms">Algorithms</NavLink>
-                    </WrapItem>
-                    <WrapItem>
-                      <NavLink href="/data-structures">Data Structures</NavLink>
-                    </WrapItem>
-                    <WrapItem>
-                      <NavLink href="/articles">Articles</NavLink>
-                    </WrapItem>
-                    <WrapItem>
-                      <NavLink href="/courses">Courses</NavLink>
-                    </WrapItem>
-                  </Wrap>
-                </Box>
+                <VStack align="stretch" px={5} mt={10}>
+                  <NavLink href="/algorithms">Algorithms</NavLink>
+                  <NavLink href="/data-structures">Data Structures</NavLink>
+                  <NavLink href="/articles">Articles</NavLink>
+                  <NavLink href="/courses">Courses</NavLink>
+                </VStack>
               </Box>
-
-              <ScrollView
-                onScroll={(scrolled: any) => {
-                  setShadow(scrolled ? "md" : undefined);
-                }}
-              >
-                <SidebarContent
-                  pathname={pathname}
-                  routes={resourcesSidebar.routes}
-                  asPath={asPath}
-                />
-              </ScrollView>
             </Flex>
           </motion.div>
         </RemoveScroll>
@@ -162,32 +133,6 @@ export function MobileNavContent(props: MobileNavContentProps) {
     </AnimatePresence>
   );
 }
-
-const ScrollView = (props: BoxProps & { onScroll?: any }) => {
-  const { onScroll, ...rest } = props;
-  const [y, setY] = React.useState(0);
-  const elRef = React.useRef<any>();
-  const { scrollY } = useElementScroll(elRef);
-  React.useEffect(() => {
-    return scrollY.onChange(() => setY(scrollY.get()));
-  }, [scrollY]);
-
-  useUpdateEffect(() => {
-    onScroll?.(y > 5 ? true : false);
-  }, [y]);
-
-  return (
-    <Box
-      ref={elRef}
-      flex="1"
-      id="routes"
-      overflow="auto"
-      px="6"
-      pb="6"
-      {...rest}
-    />
-  );
-};
 
 export const MobileNavButton = React.forwardRef(
   (props: IconButtonProps, ref: React.Ref<any>) => {
