@@ -26,11 +26,9 @@ const About = () => {
   return (
     <PageContainer
       sidebar={<Sidebar routes={[]} />}
-      // todo$ change SEO
       frontmatter={{
-        title: "Community Resources",
-        description:
-          "A rich compilation of technical descriptions and detailed information of how Chakra UI works.",
+        title: "About",
+        description: "What this website is about?",
       }}
     >
       <Main>

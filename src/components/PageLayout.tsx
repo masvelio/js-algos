@@ -24,6 +24,7 @@ interface PageLayoutProps {
   prefix?: PrefixType;
   title: string;
   body?: () => JSX.Element[];
+  pageDescription: string;
 }
 
 const PageLayout = ({
@@ -34,14 +35,14 @@ const PageLayout = ({
   prefix,
   title,
   body,
+  pageDescription,
 }: PageLayoutProps) => {
   return (
     <PageContainer
       sidebar={<Sidebar routes={sidebarRoutes} prefix={prefix} />}
       frontmatter={{
-        title: "Community Resources",
-        description:
-          "A rich compilation of technical descriptions and detailed information of how Chakra UI works.",
+        title,
+        description: pageDescription,
       }}
     >
       {fileContent ? (

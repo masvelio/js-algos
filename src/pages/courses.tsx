@@ -9,6 +9,7 @@ const Courses = () => {
       sidebarRoutes={[]}
       title="Courses"
       body={() => courses.map((item) => <CardBox key={item.url} item={item} />)}
+      pageDescription="Best courses in the web focusing on algorithms and data structures."
     />
   );
 };

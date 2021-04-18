@@ -1,7 +1,7 @@
 import React from "react";
 import { NextSeo, NextSeoProps } from "next-seo";
 
-import siteConfig from "src/site-config";
+import seoConfig from "src/seoConfing";
 
 export type SEOProps = Pick<NextSeoProps, "title" | "description">;
 
@@ -10,7 +10,7 @@ const SEO = ({ title, description }: SEOProps) => (
     title={title}
     description={description}
     openGraph={{ title, description }}
-    titleTemplate={siteConfig.seo.titleTemplate}
+    titleTemplate={seoConfig.titleTemplate}
   />
 );
 

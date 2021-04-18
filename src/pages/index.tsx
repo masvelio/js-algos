@@ -7,15 +7,12 @@ import Container from "src/components/Container";
 import Footer from "src/components/Footer";
 import Header from "src/components/Header";
 import SEO from "src/components/SEO";
+import seoConfig from "../seoConfing";
 
 const HomePage = () => {
   return (
     <>
-      {/*// todo */}
-      <SEO
-        title="Algorithms and data structures implemented in JavaScript with explanations and links to further readings."
-        description="Simple, Modular and Accessible UI Components for your React Applications. Built with Styled System"
-      />
+      <SEO title={seoConfig.title} description={seoConfig.description} />
       <Header />
 
       <Box mb={20}>

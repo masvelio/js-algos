@@ -24,7 +24,6 @@ const PageContainer = (props: PageContainerProps) => {
 
   return (
     <>
-      {/*todo check usage */}
       <SEO title={title} description={description} />
       <Header />
       <Container as="main">

@@ -32,6 +32,7 @@ const Index = ({
       slug={slug}
       prefix={prefixes.DATA_STRUCTURES}
       title="Data Structures"
+      pageDescription="A data structure is a particular way of organizing and storing data in a computer so that it can be accessed and modified efficiently."
     />
   );
 };
