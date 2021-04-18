@@ -45,7 +45,7 @@
     {
       "title": "Add your article!",
       "description": "Are you an author or maybe you know good resource? Add this article to the list clicking here!",
-      "url": "https://medium.com/siliconwat/data-structures-in-javascript-1b9aed0ea17c",
+      "url": "https://github.com/masvelio/js-algos/blob/main/src/articlesList.json",
       "additional": true
     }
   ]
