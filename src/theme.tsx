@@ -31,6 +31,7 @@ const theme = extendTheme({
     purple: {
       1000: "#100818",
     },
+    brand: "#FF8008",
   },
   fonts,
   breakpoints,

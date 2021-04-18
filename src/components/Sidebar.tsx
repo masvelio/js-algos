@@ -12,15 +12,33 @@ import {
   Text,
   useColorModeValue,
 } from "@chakra-ui/react";
-// import { convertBackticksToInlineCode } from "utils/convert-backticks-to-inline-code";
 import SidebarLink from "./SidebarLink";
 import { BiNetworkChart, BiLayer, BiBookOpen, BiGlasses } from "react-icons/bi";
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-// @ts-ignore
-export function SidebarContent(props) {
+import { prefixes } from "src/utils/constants";
+
+export interface Route {
+  categories: string[];
+  description: string;
+  name: string;
+  path: string;
+  shortSlug: string[];
+  slug: string[];
+}
+
+export type PrefixType = "data-structures" | "algorithms" | undefined;
+
+export interface SidebarContentProps {
+  routes: Array<Route>;
+  pathname: string;
+  asPath: string;
+  prefix: PrefixType;
+}
+
+export const SidebarContent = (props: SidebarContentProps) => {
   const { routes, asPath, prefix } = props;
-  const groupByKey = prefix === "data-structures" ? "name" : "categories";
+  const groupByKey =
+    prefix === prefixes.DATA_STRUCTURES ? "name" : "categories";
   const linkColor = useColorModeValue("gray.900", "whiteAlpha.900");
   const groups = _.groupBy(routes, groupByKey);
   const splittedAsPath = asPath.split("/");
@@ -30,7 +48,7 @@ export function SidebarContent(props) {
     <>
       {Object.keys(groups).map((key) => {
         const href =
-          prefix === "data-structures"
+          prefix === prefixes.DATA_STRUCTURES
             ? `/${prefix}/${groups[key][0].shortSlug.join("/")}`
             : `/${prefix}/${key.replace(/ /gi, "-")}`;
 
@@ -50,11 +68,15 @@ export function SidebarContent(props) {
       })}
     </>
   );
+};
+
+interface MainNavLinkProps {
+  href: string;
+  icon: JSX.Element;
+  children: string;
 }
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-// @ts-ignore
-const MainNavLink = ({ href, icon, children }) => {
+const MainNavLink = ({ href, icon, children }: MainNavLinkProps) => {
   const { pathname } = useRouter();
   const [, group] = href.split("/");
   const active = pathname.includes(group);
@@ -72,7 +94,7 @@ const MainNavLink = ({ href, icon, children }) => {
         color={active ? linkColor : "gray.500"}
         _hover={{ color: linkColor }}
       >
-        <Center w="6" h="6" bg="#FF8008" rounded="base" mr="3">
+        <Center w="6" h="6" bg="brand" rounded="base" mr="3">
           {icon}
         </Center>
         {children}
@@ -118,9 +140,13 @@ const MainNavLinkGroup = (props: ListProps) => {
   );
 };
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-// @ts-ignore
-const Sidebar = ({ routes, prefix = "" }) => {
+const Sidebar = ({
+  routes,
+  prefix,
+}: {
+  routes: Route[];
+  prefix?: PrefixType;
+}) => {
   const { pathname, asPath } = useRouter();
   const ref = React.useRef<HTMLDivElement>(null);
 

@@ -1,3 +1,4 @@
+import React from "react";
 import {
   chakra,
   Flex,
@@ -9,12 +10,11 @@ import {
 } from "@chakra-ui/react";
 import { useViewportScroll } from "framer-motion";
 import NextLink from "next/link";
-import React from "react";
 import { FaMoon, FaSun, FaQuestion } from "react-icons/fa";
 
 import Logo from "./Logo";
 import { MobileNavButton, MobileNavContent } from "./MobileNav";
-import SponsorButton from "./SponsorButton";
+import BuyBurgerBtn from "./BuyBurgerBtn";
 
 const HeaderContent = () => {
   const mobileNav = useDisclosure();
@@ -65,14 +65,14 @@ const HeaderContent = () => {
             <IconButton
               size="md"
               fontSize="lg"
-              aria-label={"About page"}
+              aria-label="About page"
               variant="ghost"
               color="current"
               ml={{ base: "0", md: "3" }}
               icon={<FaQuestion />}
             />
           </NextLink>
-          <SponsorButton ml="5" />
+          <BuyBurgerBtn ml="5" />
           <MobileNavButton
             ref={mobileNavBtnRef}
             aria-label="Open Menu"
@@ -85,14 +85,11 @@ const HeaderContent = () => {
   );
 };
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-// @ts-ignore
-const Header = (props) => {
+const Header = (props: any) => {
   const bg = useColorModeValue("white", "purple.1000");
   const ref = React.useRef<HTMLHeadingElement>();
   const [y, setY] = React.useState(0);
   const { height = 0 } = ref.current?.getBoundingClientRect() ?? {};
-
   const { scrollY } = useViewportScroll();
   React.useEffect(() => {
     return scrollY.onChange(() => setY(scrollY.get()));
@@ -101,7 +98,7 @@ const Header = (props) => {
   return (
     <chakra.header
       ref={ref}
-      shadow={y > height ? "sm" : undefined}
+      shadow={y > height ? "md" : undefined}
       transition="box-shadow 0.2s"
       pos="fixed"
       top="0"
@@ -110,7 +107,7 @@ const Header = (props) => {
       left="0"
       right="0"
       borderTop="6px solid"
-      borderTopColor="#FF8008"
+      borderTopColor="brand"
       width="full"
       {...props}
     >

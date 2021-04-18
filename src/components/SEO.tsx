@@ -1,5 +1,6 @@
 import React from "react";
 import { NextSeo, NextSeoProps } from "next-seo";
+
 import siteConfig from "src/site-config";
 
 export type SEOProps = Pick<NextSeoProps, "title" | "description">;

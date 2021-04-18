@@ -1,11 +1,9 @@
 import {
   Badge,
   Box,
-  BoxProps,
   Heading,
   Link,
   Text,
-  useColorModeValue,
   Wrap,
   WrapItem,
 } from "@chakra-ui/react";
@@ -13,34 +11,14 @@ import * as React from "react";
 import styled from "@emotion/styled";
 import NextLink from "next/link";
 import ReactMarkdown from "react-markdown";
+import { Route } from "./Sidebar";
 
 const StyledHeading = styled(Link)`
   text-transform: capitalize;
 `;
 
-export interface Resource {
-  heading: string;
-  type: "blog" | "talk" | "video";
-  description: string;
-  url: string;
-  author: string;
-  tags?: string[];
-}
-
-interface ResourceCardProps extends BoxProps {
-  data: Resource;
-  should?: boolean;
-}
-
-function ResourceCard({ data, should }: ResourceCardProps) {
-  if (!should) {
-    return null;
-  }
-  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-  // @ts-ignore
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+const ResourceCard = ({ data }: { data: Route }) => {
   const { description, categories, name, shortSlug } = data;
-
   return (
     <NextLink href={`${shortSlug?.join("/")}`}>
       <Box
@@ -56,7 +34,7 @@ function ResourceCard({ data, should }: ResourceCardProps) {
               <Badge
                 as="a"
                 rel="tag"
-                color={useColorModeValue("#FF8008", "#FF8008")}
+                color="brand"
                 textTransform="uppercase"
                 fontSize="xs"
                 fontWeight="bold"
@@ -84,6 +62,6 @@ function ResourceCard({ data, should }: ResourceCardProps) {
       </Box>
     </NextLink>
   );
-}
+};
 
 export default ResourceCard;

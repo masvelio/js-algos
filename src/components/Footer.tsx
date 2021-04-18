@@ -4,18 +4,6 @@ import { IoLogoTwitter, IoLogoLinkedin } from "react-icons/io";
 import { MdEmail } from "react-icons/md";
 import { DiGithubBadge } from "react-icons/di";
 
-type FooterLinkProps = {
-  icon?: React.ElementType;
-  href?: string;
-  label?: string;
-};
-
-const FooterLink: React.FC<FooterLinkProps> = ({ icon, href, label }) => (
-  <Link display="inline-block" href={href} aria-label={label} isExternal>
-    <Icon as={icon} fontSize="xl" color="gray.400" />
-  </Link>
-);
-
 const links = [
   {
     icon: DiGithubBadge,
@@ -39,7 +27,19 @@ const links = [
   },
 ];
 
-export const Footer = () => (
+type FooterLinkProps = {
+  icon: React.ElementType;
+  href: string;
+  label: string;
+};
+
+const FooterLink: React.FC<FooterLinkProps> = ({ icon, href, label }) => (
+  <Link display="inline-block" href={href} aria-label={label} isExternal>
+    <Icon as={icon} fontSize="xl" color="gray.400" />
+  </Link>
+);
+
+const Footer = () => (
   <Box as="footer" mt={12} textAlign="center">
     <Stack mt={4} direction="row" spacing="12px" justify="center">
       {links.map((link) => (

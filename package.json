@@ -1,5 +1,5 @@
 {
-  "name": "with-chakra-ui-typescript",
+  "name": "todo-with-chakra-ui-typescript",
   "version": "1.0.0",
   "scripts": {
     "build": "next build",

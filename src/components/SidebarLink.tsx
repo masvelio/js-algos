@@ -1,13 +1,13 @@
-import { chakra, PropsOf, useColorModeValue } from "@chakra-ui/react"
-import NextLink from "next/link"
-import { useRouter } from "next/router"
-import React from "react"
+import { chakra, PropsOf, useColorModeValue } from "@chakra-ui/react";
+import NextLink from "next/link";
+import { useRouter } from "next/router";
+import React from "react";
 
 const StyledLink = React.forwardRef(function StyledLink(
   props: PropsOf<typeof chakra.a> & { isActive?: boolean },
   ref: React.Ref<any>,
 ) {
-  const { isActive, ...rest } = props
+  const { isActive, ...rest } = props;
 
   return (
     <chakra.a
@@ -28,20 +28,19 @@ const StyledLink = React.forwardRef(function StyledLink(
       }}
       {...rest}
     />
-  )
-})
+  );
+});
 
 type SidebarLinkProps = PropsOf<typeof chakra.div> & {
-  href?: string
-  icon?: React.ReactElement
-}
+  href: string;
+};
 
 const SidebarLink = (props: SidebarLinkProps) => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { href, icon, children, ...rest } = props
+  const { href, children, ...rest } = props;
 
-  const { pathname } = useRouter()
-  const isActive = pathname === href
+  const { pathname } = useRouter();
+  const isActive = pathname === href;
 
   return (
     <chakra.div
@@ -51,12 +50,11 @@ const SidebarLink = (props: SidebarLinkProps) => {
       lineHeight="1.5rem"
       {...rest}
     >
-      {/*// @ts-ignore*/}
       <NextLink href={href} passHref>
         <StyledLink isActive={isActive}>{children}</StyledLink>
       </NextLink>
     </chakra.div>
-  )
-}
+  );
+};
 
-export default SidebarLink
+export default SidebarLink;

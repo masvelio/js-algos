@@ -6,10 +6,20 @@ import { useRouter } from "next/router";
 
 import { getPathsByMainPrefix } from "src/utils/getPostsPaths";
 import PageLayout from "src/components/PageLayout";
+import { Route } from "../../components/Sidebar";
+import { prefixes } from "../../utils/constants";
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-// @ts-ignore
-function Index({ algoPaths, filteredAlgoPaths, fileContent }) {
+interface AlgorithmsIndexProps {
+  algoPaths: Route[];
+  filteredAlgoPaths: Route[];
+  fileContent: string | undefined;
+}
+
+const Index = ({
+  algoPaths,
+  filteredAlgoPaths,
+  fileContent,
+}: AlgorithmsIndexProps) => {
   const router = useRouter();
   const slug = (router.query.slug || []) as string[];
 
@@ -19,16 +29,16 @@ function Index({ algoPaths, filteredAlgoPaths, fileContent }) {
       resourcesPaths={filteredAlgoPaths}
       sidebarRoutes={algoPaths}
       slug={slug}
-      prefix="algorithms"
+      prefix={prefixes.ALGORITHMS}
       title="Algorithms"
     />
   );
-}
+};
 
 export default Index;
 
 export async function getStaticPaths() {
-  const algorithmsReadmePaths = getPathsByMainPrefix("algorithms");
+  const algorithmsReadmePaths = getPathsByMainPrefix(prefixes.ALGORITHMS);
   const categories = algorithmsReadmePaths.map((el) => ({
     params: { slug: el.categories },
   }));
@@ -43,7 +53,7 @@ export async function getStaticPaths() {
 }
 
 export const getStaticProps: GetStaticProps = async (context) => {
-  const algoPaths = getPathsByMainPrefix("algorithms");
+  const algoPaths = getPathsByMainPrefix(prefixes.ALGORITHMS);
   const slug = context?.params?.slug as undefined | string[];
   const filteredAlgoPaths = algoPaths.filter((algo) =>
     slug ? algo.categories.includes(slug[0]) : true,

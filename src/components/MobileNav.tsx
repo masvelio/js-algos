@@ -1,3 +1,4 @@
+import * as React from "react";
 import {
   Box,
   Center,
@@ -12,20 +13,17 @@ import {
   useUpdateEffect,
 } from "@chakra-ui/react";
 import { AnimatePresence, motion } from "framer-motion";
-import useRouteChanged from "src/hooks/use-route-changed";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
-import * as React from "react";
 import { AiOutlineMenu } from "react-icons/ai";
 import { RemoveScroll } from "react-remove-scroll";
+
 import Logo from "./Logo";
-import SponsorButton from "./SponsorButton";
+import BuyBurgerBtn from "./BuyBurgerBtn";
+import useRouteChanged from "src/hooks/useRouteChanged";
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-// @ts-ignore
-function NavLink({ href, children }) {
+const NavLink: React.FC<{ href: string }> = ({ href, children }) => {
   const { pathname } = useRouter();
-
   const [, group] = href.split("/");
   const isActive = pathname.includes(group);
 
@@ -38,13 +36,13 @@ function NavLink({ href, children }) {
         rounded="md"
         transition="0.2s all"
         fontWeight={isActive ? "semibold" : "medium"}
-        bg={isActive ? "#FF8008" : undefined}
+        bg={isActive ? "brand" : undefined}
         borderWidth={isActive ? undefined : "1px"}
         color={isActive ? "white" : undefined}
         px={2}
         _hover={{
           bg: isActive
-            ? "#FF8008"
+            ? "brand"
             : useColorModeValue("gray.100", "whiteAlpha.100"),
         }}
       >
@@ -52,24 +50,19 @@ function NavLink({ href, children }) {
       </Center>
     </NextLink>
   );
-}
+};
 
 interface MobileNavContentProps {
   isOpen?: boolean;
   onClose?: () => void;
 }
 
-export function MobileNavContent(props: MobileNavContentProps) {
+export const MobileNavContent = (props: MobileNavContentProps) => {
   const { isOpen, onClose } = props;
   const closeBtnRef = React.useRef<HTMLButtonElement>();
-  // const { pathname, asPath } = useRouter();
 
   useRouteChanged(onClose);
 
-  /**
-   * Scenario: Menu is open on mobile, and user resizes to desktop/tablet viewport.
-   * Result: We'll close the menu
-   */
   const showOnBreakpoint = useBreakpointValue({ base: true, lg: false });
 
   React.useEffect(() => {
@@ -114,8 +107,8 @@ export function MobileNavContent(props: MobileNavContentProps) {
                 <Flex justify="space-between" px="6" pt="5" pb="4">
                   <Logo />
                   <HStack spacing="5">
-                    <SponsorButton display="flex" />
-                    {/*// @ts-ignore*/}
+                    <BuyBurgerBtn display="flex" />
+                    {/*@ts-ignore*/}
                     <CloseButton ref={closeBtnRef} onClick={onClose} />
                   </HStack>
                 </Flex>
@@ -132,7 +125,7 @@ export function MobileNavContent(props: MobileNavContentProps) {
       )}
     </AnimatePresence>
   );
-}
+};
 
 export const MobileNavButton = React.forwardRef(
   (props: IconButtonProps, ref: React.Ref<any>) => {

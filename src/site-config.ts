@@ -1,5 +1,6 @@
 const baseUrl = "https://github.com/chakra-ui/chakra-ui"
 
+// todo
 const siteConfig = {
   copyright: `Copyright © ${new Date().getFullYear()} Segun Adebayo. All Rights Reserved.`,
   algolia: {

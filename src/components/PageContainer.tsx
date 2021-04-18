@@ -1,49 +1,30 @@
-import { useRouter } from "next/router";
 import * as React from "react";
 import { Box } from "@chakra-ui/react";
 import { SkipNavContent } from "@chakra-ui/skip-nav";
+
 import Container from "src/components/Container";
 import Footer from "src/components/Footer";
 import Header from "src/components/Header";
 import SEO from "src/components/SEO";
 import PageTransition from "src/components/PageTransition";
 
-function useHeadingFocusOnRouteChange() {
-  const router = useRouter();
-
-  React.useEffect(() => {
-    const onRouteChange = () => {
-      const [heading] = Array.from(document.getElementsByTagName("h1"));
-      heading?.focus();
-    };
-    router.events.on("routeChangeComplete", onRouteChange);
-    return () => {
-      router.events.off("routeChangeComplete", onRouteChange);
-    };
-  }, []);
-}
-
 interface PageContainerProps {
   frontmatter: {
-    slug?: string;
     title: string;
-    description?: string;
-    editUrl?: string;
-    version?: string;
+    description: string;
   };
   children: React.ReactNode;
   sidebar?: any;
-  pagination?: any;
 }
 
-function PageContainer(props: PageContainerProps) {
-  const { frontmatter, children, sidebar, pagination } = props;
-  useHeadingFocusOnRouteChange();
+const PageContainer = (props: PageContainerProps) => {
+  const { frontmatter, children, sidebar } = props;
 
   const { title, description } = frontmatter;
 
   return (
     <>
+      {/*todo check usage */}
       <SEO title={title} description={description} />
       <Header />
       <Container as="main">
@@ -61,7 +42,6 @@ function PageContainer(props: PageContainerProps) {
               minH="76vh"
             >
               <PageTransition>{children}</PageTransition>
-              {pagination || null}
             </Box>
             <Footer />
           </div>
@@ -69,6 +49,6 @@ function PageContainer(props: PageContainerProps) {
       </Container>
     </>
   );
-}
+};
 
 export default PageContainer;

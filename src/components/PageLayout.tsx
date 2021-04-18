@@ -1,6 +1,4 @@
-import PageContainer from "./PageContainer";
-import Sidebar from "./sidebar/Sidebar";
-import { Main } from "./Main";
+import * as React from "react";
 import {
   Badge,
   Box,
@@ -11,30 +9,32 @@ import {
 } from "@chakra-ui/react";
 import ReactMarkdown from "react-markdown";
 import gfm from "remark-gfm";
-import * as React from "react";
-import ResourceCard, { Resource } from "./ResourceCard";
+
+import PageContainer from "./PageContainer";
+import Sidebar, { PrefixType, Route } from "./Sidebar";
+import Main from "./Main";
+import ResourceCard from "./ResourceCard";
 import reactMarkdownRenderer from "src/utils/reactMarkdownRenderer";
 
+interface PageLayoutProps {
+  sidebarRoutes: Route[];
+  fileContent?: string;
+  resourcesPaths: Route[];
+  slug?: string[];
+  prefix?: PrefixType;
+  title: string;
+  body?: () => JSX.Element[];
+}
+
 const PageLayout = ({
-  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-  // @ts-ignore
   sidebarRoutes,
-  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-  // @ts-ignore
   fileContent,
-  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-  // @ts-ignore
   resourcesPaths,
-  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-  // @ts-ignore
   slug,
-  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-  // @ts-ignore
   prefix,
-  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-  // @ts-ignore
   title,
-}) => {
+  body,
+}: PageLayoutProps) => {
   return (
     <PageContainer
       sidebar={<Sidebar routes={sidebarRoutes} prefix={prefix} />}
@@ -48,7 +48,7 @@ const PageLayout = ({
         <Main>
           <Breadcrumb separator="👉">
             {slug
-              .map((el: string) => (
+              ?.map((el: string) => (
                 <BreadcrumbItem key={el}>
                   <Badge>{el}</Badge>
                 </BreadcrumbItem>
@@ -68,27 +68,18 @@ const PageLayout = ({
       ) : (
         <Main>
           <Heading size="lg">{title}</Heading>
-          <ResourceSection resources={resourcesPaths} />
+          <Box as="section">
+            <SimpleGrid minChildWidth={300} columns={[1, 2]} spacing={6}>
+              {resourcesPaths.map((item: Route, index: number) => (
+                <ResourceCard key={index} data={item} />
+              ))}
+              {body && body()}
+            </SimpleGrid>
+          </Box>
         </Main>
       )}
     </PageContainer>
   );
 };
-
-interface ResourceSectionProps {
-  resources: Resource[];
-}
-
-function ResourceSection({ resources }: ResourceSectionProps) {
-  return (
-    <Box as="section">
-      <SimpleGrid minChildWidth={300} columns={[1, 2]} spacing={6}>
-        {resources.map((item, index) => (
-          <ResourceCard key={index} data={item} should={true} />
-        ))}
-      </SimpleGrid>
-    </Box>
-  );
-}
 
 export default PageLayout;

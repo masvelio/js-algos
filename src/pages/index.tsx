@@ -4,13 +4,14 @@ import { FaArrowRight } from "react-icons/fa";
 import NextLink from "next/link";
 
 import Container from "src/components/Container";
-import { Footer } from "src/components/Footer";
+import Footer from "src/components/Footer";
 import Header from "src/components/Header";
 import SEO from "src/components/SEO";
 
 const HomePage = () => {
   return (
     <>
+      {/*// todo */}
       <SEO
         title="Algorithms and data structures implemented in JavaScript with explanations and links to further readings."
         description="Simple, Modular and Accessible UI Components for your React Applications. Built with Styled System"

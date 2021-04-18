@@ -7,20 +7,20 @@ import { useRouter } from "next/router";
 
 import { getPathsByMainPrefix } from "src/utils/getPostsPaths";
 import PageLayout from "src/components/PageLayout";
+import { prefixes } from "../../utils/constants";
+import { Route } from "../../components/Sidebar";
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-// @ts-ignore
-function Index({
-  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-  // @ts-ignore
+interface DataStructuresIndexProps {
+  dataStructuresPaths: Route[];
+  filteredDataStructuresPaths: Route[];
+  fileContent: string | undefined;
+}
+
+const Index = ({
   dataStructuresPaths,
-  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-  // @ts-ignore
   filteredDataStructuresPaths,
-  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-  // @ts-ignore
   fileContent,
-}) {
+}: DataStructuresIndexProps) => {
   const router = useRouter();
   const slug = (router.query.slug || []) as string[];
 
@@ -30,17 +30,17 @@ function Index({
       resourcesPaths={filteredDataStructuresPaths}
       sidebarRoutes={dataStructuresPaths}
       slug={slug}
-      prefix="data-structures"
+      prefix={prefixes.DATA_STRUCTURES}
       title="Data Structures"
     />
   );
-}
+};
 
 export default Index;
 
 export async function getStaticPaths() {
   const dataStructuresReadmePaths = await getPathsByMainPrefix(
-    "data-structures",
+    prefixes.DATA_STRUCTURES,
   );
   const categories = dataStructuresReadmePaths.map((el) => ({
     params: { slug: el.categories },
@@ -56,7 +56,9 @@ export async function getStaticPaths() {
 }
 
 export const getStaticProps: GetStaticProps = async (context) => {
-  const dataStructuresPaths = await getPathsByMainPrefix("data-structures");
+  const dataStructuresPaths = await getPathsByMainPrefix(
+    prefixes.DATA_STRUCTURES,
+  );
   const slug = context?.params?.slug as undefined | string[];
   const filteredDataStructuresPaths = dataStructuresPaths.filter(
     (dataStructure) =>

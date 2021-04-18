@@ -1,8 +1,7 @@
-import React from "react";
 import { Box, BoxProps, Icon } from "@chakra-ui/react";
 import { FaHamburger } from "react-icons/fa";
 
-const SponsorButton = (props: BoxProps) => (
+const BuyBurgerBtn = (props: BoxProps) => (
   <Box
     display={{ base: "none", md: "flex" }}
     alignItems="center"
@@ -33,11 +32,11 @@ const SponsorButton = (props: BoxProps) => (
     }}
     {...props}
   >
-    <Icon as={FaHamburger} w="4" h="4" color="#FF8008" mr="2" />
+    <Icon as={FaHamburger} w="4" h="4" color="brand" mr="2" />
     <Box as="strong" lineHeight="inherit" fontWeight="semibold">
       Burger it!
     </Box>
   </Box>
 );
 
-export default SponsorButton;
+export default BuyBurgerBtn;
