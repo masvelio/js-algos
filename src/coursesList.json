@@ -1,0 +1,48 @@
+{
+  "courses": [
+    {
+      "title": "Data Structures and Algorithms in JavaScript - Full Course for Beginners",
+      "description": "Learn common data structures and algorithms in this tutorial course. You will learn the theory behind them, as well as how to program them in JavaScript.",
+      "url": "https://www.youtube.com/watch?v=t2CEgPsws3U&ab_channel=freeCodeCamp.org",
+      "badge": ["freeCodeCamp", "free"]
+    },
+    {
+      "title": "JavaScript Algorithms and Data Structures",
+      "description": "While HTML and CSS control the content and styling of a page, JavaScript is used to make it interactive. In the JavaScript Algorithm and Data Structures Certification, you'll learn the fundamentals of JavaScript including variables, arrays, objects, loops, and functions.",
+      "url": "https://www.freecodecamp.org/learn/javascript-algorithms-and-data-structures/",
+      "badge": ["freeCodeCamp", "free"]
+    },
+    {
+      "title": "A Practical Guide to Algorithms with JavaScript",
+      "description": "Bored by the academic approach of most data structures and algorithms courses? This is for you! You'll learn to solve algorithms and analyze space and time complexity in both an interview setting and in your day-to-day development. ",
+      "url": "https://frontendmasters.com/courses/practical-algorithms/",
+      "badge": ["frontend masters", "paid"]
+    },
+    {
+      "title": "Data Structures and Algorithms in JavaScript",
+      "description": "This course teaches you how to implement your first data structures and algorithms. In the process, you’ll learn some fundamental computer science concepts as well.",
+      "url": "https://egghead.io/courses/data-structures-and-algorithms-in-javascript",
+      "badge": ["egghead.io", "paid"]
+    },
+
+    {
+      "title": "JavaScript Algorithms - The Fundamentals",
+      "description": "Learn all the core basics and fundamentals about JavaScript algorithms, dive into tons of examples and get a plan for building and measuring algorithms.",
+      "url": "https://pro.academind.com/p/javascript-algorithms-the-fundamentals",
+      "badge": ["Academind", "paid"]
+    },
+
+    {
+      "title": "The Ultimate Guide to JavaScript Algorithms Courses",
+      "description": "Over the years, JavaScript has grown tremendously from the fancy client-side language capable of enhancing web pages through stunning interactivity into a reliable language generally adopted for development across multiple platforms.",
+      "url": "https://scotch.io/courses/the-ultimate-guide-to-javascript-algorithms",
+      "badge": ["scotch.io", "paid"]
+    },
+    {
+      "title": "Add your course!",
+      "description": "Are you an author or maybe you know good resource? Add this course to the list clicking here!",
+      "url": "https://medium.com/siliconwat/data-structures-in-javascript-1b9aed0ea17c",
+      "additional": true
+    }
+  ]
+}

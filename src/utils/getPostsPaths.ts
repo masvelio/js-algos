@@ -1,45 +1,81 @@
-import glob from "glob-promise";
+import dirTree from "directory-tree";
+import { join } from "path";
+import fs from "fs-extra";
 
-/**
- * @param {"algorithms" | "data-structures"} category
- * @param {string} fullPath eg. public/data/src/data-structures/tree/red-black-tree/README.md
- * @return {{ params: { slug: string[] }} eg. {params: { slug: [ 'data-structures', 'tree', 'red-black-tree' ]}}
- * */
-
-type ParamWithSlug = {
-  params: { slug: string[] };
+const fileCb = (path: any, readmePaths: any[]) => {
+  // README.md means it only takes English version of the file is
+  if (path.includes("README.md")) {
+    readmePaths.push({ path });
+  }
 };
 
-const getSlugFromPath = (
-  category: "algorithms" | "data-structures",
-  fullPath: string,
-): ParamWithSlug => {
-  const index = fullPath.indexOf(category);
-  const short = fullPath.slice(index);
+const beautifyString = (input: string) => input.split("-").join(" ");
+
+const mapDashStringToPascalCase = (input: string[] | string) => {
+  if (typeof input === "string") {
+    return beautifyString(input);
+  }
+
+  return input.map(beautifyString);
+};
+const createSlugFromPath = (path: string) => {
+  const file = fs.readFileSync(path, { encoding: "utf-8" });
+  const lines = file.split(/\r?\n/);
+  const filteredLines = lines.filter((l) => !l.match(/^[#|_|\[|!|`|-]/i));
+  const description = filteredLines.join(" ");
+  const index = path.indexOf("src");
+  const short = path.slice(index);
   const splitted = short.split("/");
-  const slug = splitted.slice(0, splitted.length - 1);
+  const slug = splitted.slice(1, splitted.length - 1);
+  const shortSlug = slug.slice(1, splitted.length);
+  const categoryArr = slug.slice(1, slug.length - 1);
+  const categories = categoryArr.length === 0 ? ["uncategorized"] : categoryArr;
+  const name = slug[slug.length - 1];
+  const parsedName = mapDashStringToPascalCase(name);
 
-  return { params: { slug } };
+  return {
+    categories,
+    slug,
+    shortSlug,
+    name: parsedName,
+    description,
+  };
+};
+const createListOfPages = (readmeFilePaths: any[]) => {
+  return readmeFilePaths.map(({ path }) => {
+    const {
+      slug,
+      shortSlug,
+      categories,
+      name,
+      description,
+    } = createSlugFromPath(path);
+
+    return {
+      shortSlug,
+      path,
+      slug,
+      categories,
+      name,
+      description,
+    };
+  });
 };
 
-const getPostsPaths = async (): Promise<Array<ParamWithSlug>> => {
-  const algorithmsReadmeFiles = await glob(
-    "public/data/src/algorithms/**/README.md",
+const createDirectoryTree = () => {
+  const path = join(process.cwd(), "public", "data", "src");
+  const readmeFilePaths: string | any[] = [];
+
+  dirTree(path, { extensions: /\.md/ }, (_item, path) =>
+    fileCb(path, readmeFilePaths),
   );
 
-  const dataStructuresReadmeFiles = await glob(
-    "public/data/src/data-structures/**/README.md",
-  );
-
-  const mappedAlgorithmsReadmeFiles = algorithmsReadmeFiles.map((fullPath) =>
-    getSlugFromPath("algorithms", fullPath),
-  );
-
-  const mappedDataStructuresReadmeFiles = dataStructuresReadmeFiles.map(
-    (fullPath) => getSlugFromPath("data-structures", fullPath),
-  );
-
-  return [...mappedAlgorithmsReadmeFiles, ...mappedDataStructuresReadmeFiles];
+  return createListOfPages(readmeFilePaths);
 };
 
-export default getPostsPaths;
+export const getPathsByMainPrefix = (
+  prefix: "algorithms" | "data-structures",
+) => {
+  const tree = createDirectoryTree();
+  return tree.filter((el) => el.slug.includes(prefix));
+};
